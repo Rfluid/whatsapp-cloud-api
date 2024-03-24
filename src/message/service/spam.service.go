@@ -11,12 +11,14 @@ import (
 	message_model "github.com/Rfluid/whatsapp/src/message/model"
 )
 
-// Sends message.
+// Spams message.
 //
-// Send service does nothing if the request gets ignored
+// Spam service retries to send message until WhatsApp accepts if the request gets ignored
 // by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func Send(
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is not safe at all because of the lack of time limit and try limit.
+func Spam(
 	api bootstrap_model.CloudApi,
 	data message_model.Message,
 ) (message_model.Response, error) {
@@ -40,17 +42,23 @@ func Send(
 
 	json.NewDecoder(resp.Body).Decode(&body)
 
+	if body.MessagingProduct == "" {
+		return Spam(api, data)
+	}
+
 	return body, nil
 }
 
-// Sends message with media cache control.
+// Spams message with media cache control.
 //
 // You may use this to control WhatsApp caching sending media via url.
 //
-// Send service does nothing if the request gets ignored
+// Spam service retries to send message until WhatsApp accepts if the request gets ignored
 // by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func SendWithCacheControll(
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is not safe at all because of the lack of time limit and try limit.
+func SpamWithCacheControll(
 	api bootstrap_model.CloudApi,
 	data message_model.Message,
 	cacheControl message_model.MediaCacheControl,
@@ -78,17 +86,23 @@ func SendWithCacheControll(
 
 	json.NewDecoder(resp.Body).Decode(&body)
 
+	if body.MessagingProduct == "" {
+		return SpamWithCacheControll(api, data, cacheControl)
+	}
+
 	return body, nil
 }
 
-// Sends many messages.
+// Spams many messages.
 //
 // All messages are sent using parallelism.
 //
-// Send service does nothing if the request gets ignored
+// Spam service retries to send message until WhatsApp accepts if the request gets ignored
 // by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func SendMany(
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is not safe at all because of the lack of time limit and try limit.
+func SpamMany(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 ) ([](message_model.Response), []error) {
@@ -104,7 +118,7 @@ func SendMany(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := Send(api, msg)
+			response, err := Spam(api, msg)
 
 			if err == nil {
 				mu.Lock()
@@ -122,16 +136,18 @@ func SendMany(
 	return responses, errs
 }
 
-// Sends many messages with media cache control.
+// Spams many messages with media cache control.
 //
 // You may use this to control WhatsApp caching sending media via url.
 //
 // All messages are sent using parallelism.
 //
-// Send service does nothing if the request gets ignored
+// Spam service retries to send message until WhatsApp accepts if the request gets ignored
 // by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func SendManyWithCacheControll(
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is not safe at all because of the lack of time limit and try limit.
+func SpamManyWithCacheControll(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
@@ -148,7 +164,7 @@ func SendManyWithCacheControll(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := SendWithCacheControll(api, msg, cacheControl)
+			response, err := SpamWithCacheControll(api, msg, cacheControl)
 
 			if err == nil {
 				mu.Lock()
@@ -166,8 +182,8 @@ func SendManyWithCacheControll(
 	return responses, errs
 }
 
-// Same as SendMany but applies a callback for each result.
-func SendManyWithCallback(
+// Same as SpamMany but applies a callback for each result.
+func SpamManyWithCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	cbk func(message_model.Response, error),
@@ -180,7 +196,7 @@ func SendManyWithCallback(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := Send(api, msg)
+			response, err := Spam(api, msg)
 
 			cbk(response, err)
 		}(msg)
@@ -188,8 +204,8 @@ func SendManyWithCallback(
 	wg.Wait()
 }
 
-// Same as SendWithCacheControll but applies a callback for each result.
-func SendManyWithCacheControllAndCallback(
+// Same as SpamWithCacheControll but applies a callback for each result.
+func SpamManyWithCacheControllAndCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
@@ -203,7 +219,7 @@ func SendManyWithCacheControllAndCallback(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := SendWithCacheControll(api, msg, cacheControl)
+			response, err := SpamWithCacheControll(api, msg, cacheControl)
 
 			cbk(response, err)
 		}(msg)

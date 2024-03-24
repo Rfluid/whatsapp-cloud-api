@@ -11,14 +11,16 @@ import (
 	message_model "github.com/Rfluid/whatsapp/src/message/model"
 )
 
-// Sends message.
+// SafeSpams message.
 //
-// Send service does nothing if the request gets ignored
-// by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func Send(
+// SafeSpam service retries to send message at most maxTries times if the request gets ignored byu cloud API. It can happen if you are trying to send 100 messages
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is safer than Spam service.
+func SafeSpam(
 	api bootstrap_model.CloudApi,
 	data message_model.Message,
+	maxTries int,
 ) (message_model.Response, error) {
 	jsonData, _ := json.Marshal(data)
 
@@ -40,20 +42,27 @@ func Send(
 
 	json.NewDecoder(resp.Body).Decode(&body)
 
+	newMaxTries := maxTries - 1
+	if body.MessagingProduct == "" && newMaxTries > 0 {
+		return SafeSpam(api, data, newMaxTries)
+	}
+
 	return body, nil
 }
 
-// Sends message with media cache control.
+// SafeSpams message with media cache control.
 //
 // You may use this to control WhatsApp caching sending media via url.
 //
-// Send service does nothing if the request gets ignored
-// by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func SendWithCacheControll(
+// SafeSpam service retries to send message at most maxTries times if the request gets ignored byu cloud API. It can happen if you are trying to send 100 messages
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is not safe at all because of the lack of time limit and try limit.
+func SafeSpamWithCacheControll(
 	api bootstrap_model.CloudApi,
 	data message_model.Message,
 	cacheControl message_model.MediaCacheControl,
+	maxTries int,
 ) (message_model.Response, error) {
 	jsonData, _ := json.Marshal(data)
 
@@ -78,19 +87,26 @@ func SendWithCacheControll(
 
 	json.NewDecoder(resp.Body).Decode(&body)
 
+	newMaxTries := maxTries - 1
+	if body.MessagingProduct == "" && newMaxTries > 0 {
+		return SafeSpamWithCacheControll(api, data, cacheControl, newMaxTries)
+	}
+
 	return body, nil
 }
 
-// Sends many messages.
+// SafeSpams many messages.
 //
 // All messages are sent using parallelism.
 //
-// Send service does nothing if the request gets ignored
-// by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func SendMany(
+// SafeSpam service retries to send message at most maxTries times if the request gets ignored byu cloud API. It can happen if you are trying to send 100 messages
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is not safe at all because of the lack of time limit and try limit.
+func SafeSpamMany(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
+	maxTries int,
 ) ([](message_model.Response), []error) {
 	var mu sync.Mutex
 	var errMu sync.Mutex
@@ -104,7 +120,7 @@ func SendMany(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := Send(api, msg)
+			response, err := SafeSpam(api, msg, maxTries)
 
 			if err == nil {
 				mu.Lock()
@@ -122,19 +138,21 @@ func SendMany(
 	return responses, errs
 }
 
-// Sends many messages with media cache control.
+// SafeSpams many messages with media cache control.
 //
 // You may use this to control WhatsApp caching sending media via url.
 //
 // All messages are sent using parallelism.
 //
-// Send service does nothing if the request gets ignored
-// by WhatsApp. It can happen if you are trying to send 100 messages
-// to the same user. If you want to retry on fail, use spam service.
-func SendManyWithCacheControll(
+// SafeSpam service retries to send message at most maxTries times if the request gets ignored byu cloud API. It can happen if you are trying to send 100 messages
+// to the same user. If you don't want to retry on fail, use send service.
+//
+// This is not safe at all because of the lack of time limit and try limit.
+func SafeSpamManyWithCacheControll(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
+	maxTries int,
 ) ([](message_model.Response), []error) {
 	var mu sync.Mutex
 	var errMu sync.Mutex
@@ -148,7 +166,7 @@ func SendManyWithCacheControll(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := SendWithCacheControll(api, msg, cacheControl)
+			response, err := SafeSpamWithCacheControll(api, msg, cacheControl, maxTries)
 
 			if err == nil {
 				mu.Lock()
@@ -166,10 +184,11 @@ func SendManyWithCacheControll(
 	return responses, errs
 }
 
-// Same as SendMany but applies a callback for each result.
-func SendManyWithCallback(
+// Same as SafeSpamMany but applies a callback for each result.
+func SafeSpamManyWithCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
+	maxTries int,
 	cbk func(message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
@@ -180,7 +199,7 @@ func SendManyWithCallback(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := Send(api, msg)
+			response, err := SafeSpam(api, msg, maxTries)
 
 			cbk(response, err)
 		}(msg)
@@ -188,11 +207,12 @@ func SendManyWithCallback(
 	wg.Wait()
 }
 
-// Same as SendWithCacheControll but applies a callback for each result.
-func SendManyWithCacheControllAndCallback(
+// Same as SafeSpamWithCacheControll but applies a callback for each result.
+func SafeSpamManyWithCacheControllAndCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
+	maxTries int,
 	cbk func(message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
@@ -203,7 +223,7 @@ func SendManyWithCacheControllAndCallback(
 		go func(msg message_model.Message) {
 			defer wg.Done()
 
-			response, err := SendWithCacheControll(api, msg, cacheControl)
+			response, err := SafeSpamWithCacheControll(api, msg, cacheControl, maxTries)
 
 			cbk(response, err)
 		}(msg)

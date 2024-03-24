@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"sync"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
 	bootstrap_service "github.com/Rfluid/whatsapp/src/bootstrap/service"
@@ -21,34 +20,32 @@ func main() {
 	Api = bootstrap_service.GenerateCloudAPI()
 	loadEnv()
 
-	var wg sync.WaitGroup
-
 	msg := message_model.Message{
 		Way: message_model.Way{
-			To:   "5591984288778",
+			To:   "",
 			Type: message_model.Text,
 		},
 		Content: message_model.Content{
 			Text: &message_type_model.Text{
 				PreviewURL: false,
-				Body:       "TOP G",
+				Body:       "Usando a api oficial do zap.",
 			},
 		},
 	}
 	msg.SetDefault()
 
-	fmt.Println(msg)
+	var arr = make([]message_model.Message, 100)
 
-	message_service.SendMany(
-		Api,
-		[]message_model.Message{msg, msg, msg},
-	)
+	for i := range arr {
+		arr[i] = msg
+	}
 
-	jsonData, _ := json.Marshal(msg)
+	resp, err := message_service.SafeSpamMany(Api, arr, 3)
+
+	jsonData, _ := json.Marshal(resp)
 	fmt.Println(string(jsonData))
-	// message_service.SendInitialTemplate(Api)
 
-	wg.Wait()
+	fmt.Println(err)
 }
 
 func loadEnv() {

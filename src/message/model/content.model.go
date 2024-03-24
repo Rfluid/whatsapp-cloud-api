@@ -13,4 +13,7 @@ type Content struct {
 	Sticker     *message_type_model.Media    `json:"sticker,omitempty"`
 	Location    *message_type_model.Location `json:"location,omitempty"`
 	Interactive interface{}                  `json:"interactive,omitempty"`
+	Template    interface{}                  `json:"template,omitempty"`
 }
+
+// TODO: Add validate content method.

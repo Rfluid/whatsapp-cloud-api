@@ -8,6 +8,7 @@ const (
 	Location    Type = "location"
 	Contacts    Type = "contacts"
 	Interactive Type = "interactive"
+	Template    Type = "template"
 
 	Image    Type = "image"
 	Video    Type = "video"
