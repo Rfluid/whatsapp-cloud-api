@@ -6,5 +6,5 @@ type Name struct {
 	LastName      string `json:"last_name,omitempty"`
 	MiddleName    string `json:"middle_name,omitempty"`
 	Suffix        string `json:"suffix,omitempty"`
-	Prefix        string `json:"prefix,omitempty"`
+	MainURL       string `json:"prefix,omitempty"`
 }

@@ -8,7 +8,7 @@ import (
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
 	bootstrap_service "github.com/Rfluid/whatsapp/src/bootstrap/service"
 	message_model "github.com/Rfluid/whatsapp/src/message/model"
-	message_type_model "github.com/Rfluid/whatsapp/src/message/model/type"
+	message_content_type_model "github.com/Rfluid/whatsapp/src/message/model/content-type"
 	message_service "github.com/Rfluid/whatsapp/src/message/service"
 	"github.com/joho/godotenv"
 )
@@ -22,28 +22,25 @@ func main() {
 
 	msg := message_model.Message{
 		Way: message_model.Way{
-			To:   "",
+			To:   "5591984288778",
 			Type: message_model.Text,
 		},
 		Content: message_model.Content{
-			Text: &message_type_model.Text{
+			Text: &message_content_type_model.Text{
 				PreviewURL: false,
-				Body:       "Usando a api oficial do zap.",
+				Body:       "because ** was in paris",
 			},
 		},
 	}
 	msg.SetDefault()
 
-	var arr = make([]message_model.Message, 100)
-
-	for i := range arr {
-		arr[i] = msg
-	}
-
-	resp, err := message_service.SafeSpamMany(Api, arr, 3)
+	resp, err := message_service.Send(Api, msg)
 
 	jsonData, _ := json.Marshal(resp)
 	fmt.Println(string(jsonData))
+
+	jsonDataMsg, _ := json.Marshal(msg)
+	fmt.Println(string(jsonDataMsg))
 
 	fmt.Println(err)
 }

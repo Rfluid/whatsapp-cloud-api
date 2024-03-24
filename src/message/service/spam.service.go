@@ -26,14 +26,13 @@ func Spam(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.MainURL),
+		fmt.Sprintf("%s/messages", api.PhoneIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
-		fmt.Println(err)
 		return message_model.Response{}, err
 	}
 	defer resp.Body.Close()
@@ -67,7 +66,7 @@ func SpamWithCacheControll(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.MainURL),
+		fmt.Sprintf("%s/messages", api.PhoneIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers

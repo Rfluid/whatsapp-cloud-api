@@ -8,16 +8,16 @@ import (
 
 type CloudApi struct {
 	AccessToken string
-	Prefix      string
-	Version     string
 	WABAId      string
+	Version     string
 	MainURL     string
+	PhoneIdURL  string
 	Headers     http.Header
 	Client      *http.Client
 }
 
-func (btp *CloudApi) SetMainURL() {
-	btp.MainURL = fmt.Sprintf("%s/%s/%s", btp.Prefix, btp.Version, btp.WABAId)
+func (btp *CloudApi) SetPhoneIdURL() {
+	btp.PhoneIdURL = fmt.Sprintf("%s/%s/%s", btp.MainURL, btp.Version, btp.WABAId)
 }
 
 func (btp *CloudApi) SetAccessToken(
@@ -53,13 +53,13 @@ func (btp *CloudApi) SetVersion(
 	return btp
 }
 
-func (btp *CloudApi) SetPrefix(
+func (btp *CloudApi) SetMainURL(
 	prefix string,
 ) *CloudApi {
 	if prefix != "" {
-		btp.Prefix = prefix
+		btp.MainURL = prefix
 	} else {
-		log.Println("Prefix not provided. Loading default...")
+		log.Println("MainURL not provided. Loading default...")
 	}
 
 	return btp

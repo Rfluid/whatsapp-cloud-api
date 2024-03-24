@@ -31,7 +31,7 @@ func BootstrapApiValues(
 
 	wg.Wait()
 
-	// fmt.Println(api.MainURL)
+	// fmt.Println(api.PhoneIdURL)
 	// fmt.Println(api.Headers)
 }
 
@@ -46,7 +46,7 @@ func bootstrapUrl(
 	localBtp.Add(1)
 	go synchSetApiValue(
 		&localBtp,
-		api.SetPrefix,
+		api.SetMainURL,
 		"META_WHATSAPP_CLOUD_API_PREFIX",
 	)
 
@@ -66,7 +66,7 @@ func bootstrapUrl(
 
 	localBtp.Wait()
 
-	api.SetMainURL()
+	api.SetPhoneIdURL()
 }
 
 func bootstrapHeaders(

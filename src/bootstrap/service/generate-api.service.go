@@ -8,7 +8,7 @@ import (
 
 func GenerateCloudAPI() bootstrap_model.CloudApi {
 	return bootstrap_model.CloudApi{
-		Prefix:  "https://graph.facebook.com",
+		MainURL: "https://graph.facebook.com",
 		Version: "v18.0",
 		Client:  &http.Client{},
 	}

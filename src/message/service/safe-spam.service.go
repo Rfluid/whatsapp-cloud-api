@@ -26,7 +26,7 @@ func SafeSpam(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.MainURL),
+		fmt.Sprintf("%s/messages", api.PhoneIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
@@ -68,7 +68,7 @@ func SafeSpamWithCacheControll(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.MainURL),
+		fmt.Sprintf("%s/messages", api.PhoneIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
