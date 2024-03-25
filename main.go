@@ -28,7 +28,7 @@ func main() {
 		Content: message_model.Content{
 			Text: &message_content_type_model.Text{
 				PreviewURL: false,
-				Body:       "because ** was in paris",
+				Body:       "because was in paris",
 			},
 		},
 	}

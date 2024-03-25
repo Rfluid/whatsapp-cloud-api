@@ -5,8 +5,8 @@ import (
 	message_model "github.com/Rfluid/whatsapp/src/message/model"
 )
 
-// Sends hello_world template to receiverNumber.
-func SentMessageStatusCheck(
+// Checks API health sending hello_world template to receiverNumber.
+func SendMessageStatusCheck(
 	api bootstrap_model.CloudApi,
 	receiverNumber string,
 ) (message_model.Response, error) {
