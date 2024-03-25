@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
 	profile_model "github.com/Rfluid/whatsapp/src/profile/model"
 )
 
@@ -14,7 +15,7 @@ import (
 // @fields Are the fields that must be returned by query.
 func GetProfile(
 	api bootstrap_model.CloudApi,
-	fields []profile_model.BusinessProfileFields,
+	fields []profile_model.BusinessProfileField,
 ) (profile_model.BusinessProfile, error) {
 	fieldsStr := ""
 
@@ -27,7 +28,7 @@ func GetProfile(
 
 	req, _ := http.NewRequest(
 		"GET",
-		fmt.Sprintf("%s/whatsapp_business_profile", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.BusinessProfile),
 		nil,
 	)
 	req.Header = api.Headers

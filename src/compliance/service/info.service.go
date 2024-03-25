@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
 	common_model "github.com/Rfluid/whatsapp/src/common/model"
 	compliance_model "github.com/Rfluid/whatsapp/src/compliance/model"
 )
@@ -17,7 +18,7 @@ func Get(
 ) (compliance_model.Info, error) {
 	req, _ := http.NewRequest(
 		"GET",
-		fmt.Sprintf("%s/business_compliance_info", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.BusinessComplianceInfo),
 		nil,
 	)
 	req.Header = api.Headers
@@ -44,7 +45,7 @@ func Post(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/business_compliance_info", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.BusinessComplianceInfo),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers

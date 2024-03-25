@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
 	common_model "github.com/Rfluid/whatsapp/src/common/model"
 	phone_verification_model "github.com/Rfluid/whatsapp/src/phone-verification/model"
 )
@@ -23,7 +24,7 @@ func ConfigIdentityCheck(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/settings", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.IdentitySettings),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers

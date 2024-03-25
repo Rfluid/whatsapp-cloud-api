@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
 	common_model "github.com/Rfluid/whatsapp/src/common/model"
 	register_model "github.com/Rfluid/whatsapp/src/register/model"
 )
@@ -20,7 +21,7 @@ func Register(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/register", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Register),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
@@ -44,7 +45,7 @@ func DeRegister(
 ) (common_model.SuccessResponse, error) {
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/deregister", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.DeRegister),
 		nil,
 	)
 	req.Header = api.Headers

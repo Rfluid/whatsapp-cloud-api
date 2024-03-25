@@ -8,6 +8,7 @@ import (
 	"net/url"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
 	common_model "github.com/Rfluid/whatsapp/src/common/model"
 	phone_verification_model "github.com/Rfluid/whatsapp/src/phone-verification/model"
 )
@@ -23,7 +24,7 @@ func RequestCode(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/request_code", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.RequestCode),
 		bytes.NewBufferString(formData.Encode()),
 	)
 	req.Header = api.Headers
@@ -51,7 +52,7 @@ func VerifyCode(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/verify_code", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.VerifyCode),
 		bytes.NewBufferString(formData.Encode()),
 	)
 	req.Header = api.Headers

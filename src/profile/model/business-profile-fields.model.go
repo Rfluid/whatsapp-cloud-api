@@ -1,14 +1,14 @@
 package profile_model
 
-type BusinessProfileFields string
+type BusinessProfileField string
 
 const (
-	About             BusinessProfileFields = "about"
-	Address           BusinessProfileFields = "address"
-	Description       BusinessProfileFields = "description"
-	Email             BusinessProfileFields = "email"
-	MessagingProduct  BusinessProfileFields = "messaging_product"
-	ProfilePictureURL BusinessProfileFields = "profile_picture_url"
-	Websites          BusinessProfileFields = "websites"
-	Vertical          BusinessProfileFields = "vertical"
+	About             BusinessProfileField = "about"
+	Address           BusinessProfileField = "address"
+	Description       BusinessProfileField = "description"
+	Email             BusinessProfileField = "email"
+	MessagingProduct  BusinessProfileField = "messaging_product"
+	ProfilePictureURL BusinessProfileField = "profile_picture_url"
+	Websites          BusinessProfileField = "websites"
+	Vertical          BusinessProfileField = "vertical"
 )

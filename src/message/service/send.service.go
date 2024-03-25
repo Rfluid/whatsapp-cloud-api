@@ -8,6 +8,7 @@ import (
 	"sync"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
 	message_model "github.com/Rfluid/whatsapp/src/message/model"
 )
 
@@ -24,7 +25,7 @@ func Send(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
@@ -58,7 +59,7 @@ func SendWithCacheControll(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.WABAIdURL),
+		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
