@@ -10,6 +10,6 @@ type Default struct {
 
 // Sets the default fields so you don't have to worry about it.
 func (d *Default) SetDefault() {
-	d.MessagingProduct.MessagingProduct = "whatsapp"
+	d.MessagingProduct.SetDefault()
 	d.RecipientType = "individual"
 }
