@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	common_model "github.com/Rfluid/whatsapp/src/common/model"
 	compliance_model "github.com/Rfluid/whatsapp/src/compliance/model"
 )
 
@@ -38,7 +39,7 @@ func Get(
 func Post(
 	api bootstrap_model.CloudApi,
 	data compliance_model.PostInfoPayload,
-) (compliance_model.SuccessResponse, error) {
+) (common_model.SuccessResponse, error) {
 	jsonData, _ := json.Marshal(data)
 
 	req, _ := http.NewRequest(
@@ -50,11 +51,11 @@ func Post(
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
-		return compliance_model.SuccessResponse{}, err
+		return common_model.SuccessResponse{}, err
 	}
 	defer resp.Body.Close()
 
-	var body compliance_model.SuccessResponse
+	var body common_model.SuccessResponse
 
 	json.NewDecoder(resp.Body).Decode(&body)
 
