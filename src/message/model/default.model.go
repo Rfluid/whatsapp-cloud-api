@@ -1,13 +1,15 @@
 package message_model
 
+import common_model "github.com/Rfluid/whatsapp/src/common/model"
+
 // Default fields for messaging.
 type Default struct {
-	MessagingProduct string `json:"messaging_product"` // Default is "whatsapp"
-	RecipientType    string `json:"recipient_type"`    // Default is "individual"
+	RecipientType string `json:"recipient_type"` // Default is "individual"
+	common_model.MessagingProduct
 }
 
 // Sets the default fields so you don't have to worry about it.
 func (d *Default) SetDefault() {
-	d.MessagingProduct = "whatsapp"
+	d.MessagingProduct.MessagingProduct = "whatsapp"
 	d.RecipientType = "individual"
 }
