@@ -13,7 +13,8 @@ import (
 
 // Sets or unsets identity check.
 //
-// See https://developers.facebook.com/docs/whatsapp/cloud-api/reference/phone-numbers#verify to check examples of message with identity verification.
+// See https://developers.facebook.com/docs/whatsapp/cloud-api/reference/phone-numbers#verify
+// to check examples of message with identity verification.
 func ConfigIdentityCheck(
 	api bootstrap_model.CloudApi,
 	data phone_verification_model.UserIdentityChangeConfig,
@@ -22,7 +23,7 @@ func ConfigIdentityCheck(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/settings", api.PhoneIdURL),
+		fmt.Sprintf("%s/settings", api.WABAIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers

@@ -23,7 +23,7 @@ func RequestCode(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/request_code", api.PhoneIdURL),
+		fmt.Sprintf("%s/request_code", api.WABAIdURL),
 		bytes.NewBufferString(formData.Encode()),
 	)
 	req.Header = api.Headers
@@ -51,7 +51,7 @@ func VerifyCode(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/verify_code", api.PhoneIdURL),
+		fmt.Sprintf("%s/verify_code", api.WABAIdURL),
 		bytes.NewBufferString(formData.Encode()),
 	)
 	req.Header = api.Headers

@@ -31,7 +31,7 @@ func BootstrapApiValues(
 
 	wg.Wait()
 
-	// fmt.Println(api.PhoneIdURL)
+	// fmt.Println(api.WABAIdURL)
 	// fmt.Println(api.Headers)
 }
 
@@ -66,7 +66,7 @@ func bootstrapUrl(
 
 	localBtp.Wait()
 
-	api.SetPhoneIdURL()
+	api.SetWABAIdURL()
 }
 
 func bootstrapHeaders(

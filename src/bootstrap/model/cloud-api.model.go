@@ -11,13 +11,13 @@ type CloudApi struct {
 	WABAId      string
 	Version     string
 	MainURL     string
-	PhoneIdURL  string
+	WABAIdURL   string
 	Headers     http.Header
 	Client      *http.Client
 }
 
-func (btp *CloudApi) SetPhoneIdURL() {
-	btp.PhoneIdURL = fmt.Sprintf("%s/%s/%s", btp.MainURL, btp.Version, btp.WABAId)
+func (btp *CloudApi) SetWABAIdURL() {
+	btp.WABAIdURL = fmt.Sprintf("%s/%s/%s", btp.MainURL, btp.Version, btp.WABAId)
 }
 
 func (btp *CloudApi) SetAccessToken(

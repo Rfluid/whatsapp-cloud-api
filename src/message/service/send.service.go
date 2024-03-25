@@ -24,7 +24,7 @@ func Send(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.PhoneIdURL),
+		fmt.Sprintf("%s/messages", api.WABAIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
@@ -58,7 +58,7 @@ func SendWithCacheControll(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/messages", api.PhoneIdURL),
+		fmt.Sprintf("%s/messages", api.WABAIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers

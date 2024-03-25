@@ -17,7 +17,7 @@ func Get(
 ) (compliance_model.Info, error) {
 	req, _ := http.NewRequest(
 		"GET",
-		fmt.Sprintf("%s/business_compliance_info", api.PhoneIdURL),
+		fmt.Sprintf("%s/business_compliance_info", api.WABAIdURL),
 		nil,
 	)
 	req.Header = api.Headers
@@ -44,7 +44,7 @@ func Post(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/business_compliance_info", api.PhoneIdURL),
+		fmt.Sprintf("%s/business_compliance_info", api.WABAIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers

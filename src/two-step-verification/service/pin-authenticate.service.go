@@ -19,7 +19,7 @@ func AuthenticateWithPin(
 
 	req, _ := http.NewRequest(
 		"POST",
-		api.PhoneIdURL,
+		api.WABAIdURL,
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers

@@ -20,7 +20,7 @@ func Register(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/register", api.PhoneIdURL),
+		fmt.Sprintf("%s/register", api.WABAIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
@@ -44,7 +44,7 @@ func DeRegister(
 ) (common_model.SuccessResponse, error) {
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/deregister", api.PhoneIdURL),
+		fmt.Sprintf("%s/deregister", api.WABAIdURL),
 		nil,
 	)
 	req.Header = api.Headers
