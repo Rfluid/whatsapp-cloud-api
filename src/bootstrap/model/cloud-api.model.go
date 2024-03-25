@@ -47,9 +47,10 @@ func (btp *CloudApi) SetVersion(
 ) *CloudApi {
 	if version != "" {
 		btp.Version = version
-	} else {
-		log.Println("Version not provided. Loading default...")
 	}
+	// else {
+	// 	log.Println("Version not provided. Loading default...")
+	// }
 	return btp
 }
 
@@ -58,9 +59,10 @@ func (btp *CloudApi) SetMainURL(
 ) *CloudApi {
 	if prefix != "" {
 		btp.MainURL = prefix
-	} else {
-		log.Println("MainURL not provided. Loading default...")
 	}
+	// else {
+	// 	log.Println("MainURL not provided. Loading default...")
+	// }
 
 	return btp
 }
