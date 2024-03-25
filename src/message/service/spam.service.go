@@ -185,7 +185,7 @@ func SpamManyWithCacheControll(
 func SpamManyWithCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
-	cbk func(message_model.Response, error),
+	callback func(message_model.Message, message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
 
@@ -197,7 +197,7 @@ func SpamManyWithCallback(
 
 			response, err := Spam(api, msg)
 
-			cbk(response, err)
+			callback(msg, response, err)
 		}(msg)
 	}
 	wg.Wait()
@@ -208,7 +208,7 @@ func SpamManyWithCacheControllAndCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
-	cbk func(message_model.Response, error),
+	callback func(message_model.Message, message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
 
@@ -220,7 +220,7 @@ func SpamManyWithCacheControllAndCallback(
 
 			response, err := SpamWithCacheControll(api, msg, cacheControl)
 
-			cbk(response, err)
+			callback(msg, response, err)
 		}(msg)
 	}
 	wg.Wait()

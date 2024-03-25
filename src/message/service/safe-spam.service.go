@@ -189,7 +189,7 @@ func SafeSpamManyWithCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	maxTries int,
-	cbk func(message_model.Response, error),
+	callback func(message_model.Message, message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
 
@@ -201,7 +201,7 @@ func SafeSpamManyWithCallback(
 
 			response, err := SafeSpam(api, msg, maxTries)
 
-			cbk(response, err)
+			callback(msg, response, err)
 		}(msg)
 	}
 	wg.Wait()
@@ -213,7 +213,7 @@ func SafeSpamManyWithCacheControllAndCallback(
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 	maxTries int,
-	cbk func(message_model.Response, error),
+	callback func(message_model.Message, message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
 
@@ -225,7 +225,7 @@ func SafeSpamManyWithCacheControllAndCallback(
 
 			response, err := SafeSpamWithCacheControll(api, msg, cacheControl, maxTries)
 
-			cbk(response, err)
+			callback(msg, response, err)
 		}(msg)
 	}
 	wg.Wait()

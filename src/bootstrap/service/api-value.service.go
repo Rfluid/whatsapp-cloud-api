@@ -11,11 +11,11 @@ import (
 
 func synchSetApiValue(
 	wg *sync.WaitGroup,
-	cbk func(string) *bootstrap_model.CloudApi,
+	callback func(string) *bootstrap_model.CloudApi,
 	dotEnvGetter string,
 ) *bootstrap_model.CloudApi {
 	defer wg.Done()
-	return cbk(os.Getenv(dotEnvGetter))
+	return callback(os.Getenv(dotEnvGetter))
 }
 
 func BootstrapApiValues(

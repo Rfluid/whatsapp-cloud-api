@@ -169,7 +169,7 @@ func SendManyWithCacheControll(
 func SendManyWithCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
-	cbk func(message_model.Response, error),
+	callback func(message_model.Message, message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
 
@@ -181,7 +181,7 @@ func SendManyWithCallback(
 
 			response, err := Send(api, msg)
 
-			cbk(response, err)
+			callback(msg, response, err)
 		}(msg)
 	}
 	wg.Wait()
@@ -192,7 +192,7 @@ func SendManyWithCacheControllAndCallback(
 	api bootstrap_model.CloudApi,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
-	cbk func(message_model.Response, error),
+	callback func(message_model.Message, message_model.Response, error),
 ) {
 	var wg sync.WaitGroup
 
@@ -204,7 +204,7 @@ func SendManyWithCacheControllAndCallback(
 
 			response, err := SendWithCacheControll(api, msg, cacheControl)
 
-			cbk(response, err)
+			callback(msg, response, err)
 		}(msg)
 	}
 	wg.Wait()

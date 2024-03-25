@@ -1,25 +1,28 @@
-package two_step_verification_service
+package phone_verification_service
 
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
 	common_model "github.com/Rfluid/whatsapp/src/common/model"
-	two_step_verification_model "github.com/Rfluid/whatsapp/src/two-step-verification/model"
+	phone_verification_model "github.com/Rfluid/whatsapp/src/phone-verification/model"
 )
 
-// Authenticates with pin.
-func AuthenticateWithPin(
+// Sets or unsets identity check.
+//
+// See https://developers.facebook.com/docs/whatsapp/cloud-api/reference/phone-numbers#verify to check examples of message with identity verification.
+func ConfigIdentityCheck(
 	api bootstrap_model.CloudApi,
-	pin two_step_verification_model.Pin,
+	data phone_verification_model.UserIdentityChangeConfig,
 ) (common_model.SuccessResponse, error) {
-	jsonData, _ := json.Marshal(pin)
+	jsonData, _ := json.Marshal(data)
 
 	req, _ := http.NewRequest(
 		"POST",
-		api.PhoneIdURL,
+		fmt.Sprintf("%s/settings", api.PhoneIdURL),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.Headers
