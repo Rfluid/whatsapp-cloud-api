@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
-	common_model "github.com/Rfluid/whatsapp/src/common/model"
-	two_step_verification_model "github.com/Rfluid/whatsapp/src/two-step-verification/model"
+	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
+	two_step_verification_model "github.com/Rfluid/whatsapp-cloud-api/src/two-step-verification/model"
 )
 
 // Authenticates with pin.

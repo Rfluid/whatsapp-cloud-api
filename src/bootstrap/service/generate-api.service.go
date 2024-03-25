@@ -3,7 +3,7 @@ package bootstrap_service
 import (
 	"net/http"
 
-	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
+	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 )
 
 func GenerateCloudAPI() bootstrap_model.CloudApi {

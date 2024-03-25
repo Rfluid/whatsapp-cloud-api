@@ -1,6 +1,6 @@
 package message_model
 
-import common_model "github.com/Rfluid/whatsapp/src/common/model"
+import common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 
 // Response by api when message is sent.
 type Response struct {

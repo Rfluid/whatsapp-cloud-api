@@ -1,6 +1,6 @@
 package message_model
 
-import common_model "github.com/Rfluid/whatsapp/src/common/model"
+import common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 
 // Default fields for messaging.
 type Default struct {

@@ -1,6 +1,6 @@
 package message_model
 
-import message_content_type_model "github.com/Rfluid/whatsapp/src/message/model/content-type"
+import message_content_type_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type"
 
 // The message real content seen by user.
 type Content struct {

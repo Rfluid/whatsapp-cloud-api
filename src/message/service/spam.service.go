@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"sync"
 
-	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
-	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
-	message_model "github.com/Rfluid/whatsapp/src/message/model"
+	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
+	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
 )
 
 // Spams message.

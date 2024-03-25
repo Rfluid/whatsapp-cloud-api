@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"net/url"
 
-	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
-	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
-	common_model "github.com/Rfluid/whatsapp/src/common/model"
-	phone_verification_model "github.com/Rfluid/whatsapp/src/phone-verification/model"
+	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
+	phone_verification_model "github.com/Rfluid/whatsapp-cloud-api/src/phone-verification/model"
 )
 
 // Requests phone verification code.

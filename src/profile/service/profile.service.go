@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
-	common_enum "github.com/Rfluid/whatsapp/src/common/enum"
-	profile_model "github.com/Rfluid/whatsapp/src/profile/model"
+	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
+	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
+	profile_model "github.com/Rfluid/whatsapp-cloud-api/src/profile/model"
 )
 
 // Gets WhatsApp Business Profile.

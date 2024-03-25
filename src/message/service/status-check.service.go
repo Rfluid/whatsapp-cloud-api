@@ -1,8 +1,8 @@
 package message_service
 
 import (
-	bootstrap_model "github.com/Rfluid/whatsapp/src/bootstrap/model"
-	message_model "github.com/Rfluid/whatsapp/src/message/model"
+	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
+	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
 )
 
 // Checks API health sending hello_world template to receiverNumber.

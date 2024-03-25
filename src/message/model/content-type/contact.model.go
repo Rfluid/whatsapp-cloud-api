@@ -3,7 +3,7 @@ package message_content_type_model
 import (
 	"time"
 
-	message_type_contact_model "github.com/Rfluid/whatsapp/src/message/model/content-type/contact"
+	message_type_contact_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/contact"
 )
 
 type Contact struct {
