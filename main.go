@@ -21,7 +21,7 @@ func main() {
 	loadEnv()
 
 	msg := message_model.Message{
-		Way: message_model.Way{
+		Direction: message_model.Direction{
 			To:   "5591984288778",
 			Type: message_model.Text,
 		},

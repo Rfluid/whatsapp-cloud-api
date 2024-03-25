@@ -44,7 +44,7 @@ func SafeSpam(
 	json.NewDecoder(resp.Body).Decode(&body)
 
 	newMaxTries := maxTries - 1
-	if body.MessagingProduct == "" && newMaxTries > 0 {
+	if body.MessagingProduct.MessagingProduct == "" && newMaxTries > 0 {
 		return SafeSpam(api, data, newMaxTries)
 	}
 
@@ -89,7 +89,7 @@ func SafeSpamWithCacheControll(
 	json.NewDecoder(resp.Body).Decode(&body)
 
 	newMaxTries := maxTries - 1
-	if body.MessagingProduct == "" && newMaxTries > 0 {
+	if body.MessagingProduct.MessagingProduct == "" && newMaxTries > 0 {
 		return SafeSpamWithCacheControll(api, data, cacheControl, newMaxTries)
 	}
 

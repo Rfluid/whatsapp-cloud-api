@@ -1,8 +1,10 @@
 package message_model
 
+import common_model "github.com/Rfluid/whatsapp/src/common/model"
+
 // Response by api when message is sent.
 type Response struct {
-	MessagingProduct string            `json:"messaging_product,omitempty"` // Default "whatsapp". Actually you will only receive this.
-	Contacts         []ResponseContact `json:"contacts,omitempty"`          // Contacts that received messages.
-	Messages         []Id              `json:"messages,omitempty"`          // Ids of sent messages.
+	Contacts []ResponseContact `json:"contacts,omitempty"` // Contacts that received messages.
+	Messages []MessageResponse `json:"messages,omitempty"` // Ids of sent messages.
+	common_model.MessagingProduct
 }

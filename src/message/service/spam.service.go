@@ -42,7 +42,7 @@ func Spam(
 
 	json.NewDecoder(resp.Body).Decode(&body)
 
-	if body.MessagingProduct == "" {
+	if body.MessagingProduct.MessagingProduct == "" {
 		return Spam(api, data)
 	}
 
@@ -86,7 +86,7 @@ func SpamWithCacheControll(
 
 	json.NewDecoder(resp.Body).Decode(&body)
 
-	if body.MessagingProduct == "" {
+	if body.MessagingProduct.MessagingProduct == "" {
 		return SpamWithCacheControll(api, data, cacheControl)
 	}
 

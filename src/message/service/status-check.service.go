@@ -11,7 +11,7 @@ func SentMessageStatusCheck(
 	receiverNumber string,
 ) (message_model.Response, error) {
 	msg := message_model.Message{
-		Way: message_model.Way{
+		Direction: message_model.Direction{
 			To:   receiverNumber,
 			Type: message_model.Template,
 		},
