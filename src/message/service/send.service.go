@@ -28,7 +28,7 @@ func Send(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -62,7 +62,7 @@ func SendWithCacheControll(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	for key, value := range cacheControl.ToMap() {
 		req.Header.Add(key, value)

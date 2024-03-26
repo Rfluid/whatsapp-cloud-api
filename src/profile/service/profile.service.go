@@ -26,12 +26,15 @@ func GetProfile(
 		}
 	}
 
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"GET",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.BusinessProfile),
 		nil,
 	)
-	req.Header = api.Headers
+	if err != nil {
+		return profile_model.BusinessProfile{}, err
+	}
+	req.Header = api.JSONHeaders
 
 	query := req.URL.Query()
 	query.Add("fields", fieldsStr)

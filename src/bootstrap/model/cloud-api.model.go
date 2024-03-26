@@ -12,7 +12,8 @@ type WhatsAppAPI struct {
 	Version     string
 	MainURL     string
 	WABAIdURL   string
-	Headers     http.Header
+	JSONHeaders http.Header
+	FormHeaders http.Header
 	Client      *http.Client
 }
 
@@ -74,9 +75,16 @@ func (btp *WhatsAppAPI) SetMainURL(
 	return btp
 }
 
-func (btp *WhatsAppAPI) SetHeaders() *WhatsAppAPI {
-	btp.Headers = http.Header{
+func (btp *WhatsAppAPI) SetJSONHeaders() *WhatsAppAPI {
+	btp.JSONHeaders = http.Header{
 		"Content-Type":  {"application/json"},
+		"Authorization": {fmt.Sprintf("Bearer %s", btp.AccessToken)},
+	}
+	return btp
+}
+
+func (btp *WhatsAppAPI) SetFormHeaders() *WhatsAppAPI {
+	btp.JSONHeaders = http.Header{
 		"Authorization": {fmt.Sprintf("Bearer %s", btp.AccessToken)},
 	}
 	return btp

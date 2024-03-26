@@ -27,7 +27,7 @@ func ConfigIdentityCheck(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.IdentitySettings),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {

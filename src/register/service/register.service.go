@@ -17,14 +17,20 @@ func Register(
 	api bootstrap_model.WhatsAppAPI,
 	data register_model.Register,
 ) (common_model.SuccessResponse, error) {
-	jsonData, _ := json.Marshal(data)
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return common_model.SuccessResponse{}, err
+	}
 
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Register),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	if err != nil {
+		return common_model.SuccessResponse{}, err
+	}
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -43,12 +49,15 @@ func Register(
 func DeRegister(
 	api bootstrap_model.WhatsAppAPI,
 ) (common_model.SuccessResponse, error) {
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.DeRegister),
 		nil,
 	)
-	req.Header = api.Headers
+	if err != nil {
+		return common_model.SuccessResponse{}, err
+	}
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {

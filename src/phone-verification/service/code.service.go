@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
@@ -18,16 +17,16 @@ func RequestCode(
 	api bootstrap_model.WhatsAppAPI,
 	data phone_verification_model.RequestCode,
 ) (common_model.SuccessResponse, error) {
-	formData := url.Values{}
-	formData.Set("code_method", string(data.CodeMethod))
-	formData.Set("language", data.Language)
-
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.RequestCode),
-		bytes.NewBufferString(formData.Encode()),
+		bytes.NewBufferString(data.ToURLValues().Encode()),
 	)
-	req.Header = api.Headers
+	if err != nil {
+		return common_model.SuccessResponse{}, err
+	}
+
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -47,15 +46,16 @@ func VerifyCode(
 	api bootstrap_model.WhatsAppAPI,
 	data phone_verification_model.VerifyCode,
 ) (common_model.SuccessResponse, error) {
-	formData := url.Values{}
-	formData.Set("code", string(data.Code))
-
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.VerifyCode),
-		bytes.NewBufferString(formData.Encode()),
+		bytes.NewBufferString(data.ToURLValues().Encode()),
 	)
-	req.Header = api.Headers
+	if err != nil {
+		return common_model.SuccessResponse{}, err
+	}
+
+	req.Header = api.FormHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {

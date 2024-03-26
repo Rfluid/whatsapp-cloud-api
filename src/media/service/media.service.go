@@ -40,7 +40,7 @@ func Upload(
 	if err != nil {
 		return common_model.Id{}, err
 	}
-	req.Header = api.Headers
+	req.Header = api.FormHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -76,7 +76,7 @@ func RetrieveURL(
 		fmt.Sprintf("%s/%s", api.MainURL, mediaId),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -104,7 +104,7 @@ func Delete(
 	if err != nil {
 		return common_model.SuccessResponse{}, err
 	}
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -133,7 +133,7 @@ func Download(
 		return []byte{}, err
 	}
 
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {

@@ -23,7 +23,7 @@ func SetStatus(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {

@@ -8,7 +8,6 @@ import (
 
 func GenerateWhatsAppAPI(
 	accessToken string,
-	wabaId string,
 	version *string,
 	customMainURL *string,
 	customWABAIdURL *string,
@@ -25,7 +24,7 @@ func GenerateWhatsAppAPI(
 	mainUrl := "https://graph.facebook.com"
 	mUrlP := &mainUrl
 
-	btp.SetVersion(version).SetAccessToken(accessToken).SetWABAId(wabaId).SetMainURL(mUrlP, customMainURL).SetHeaders().SetWABAIdURL(customWABAIdURL)
+	btp.SetVersion(version).SetAccessToken(accessToken).SetMainURL(mUrlP, customMainURL)
 
 	return btp
 }
