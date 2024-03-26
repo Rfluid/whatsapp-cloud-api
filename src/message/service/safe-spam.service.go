@@ -30,7 +30,7 @@ func SafeSpam(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -58,7 +58,7 @@ func SafeSpam(
 // SafeSpam service retries to send message at most maxTries times if the request gets ignored byu cloud API. It can happen if you are trying to send 100 messages
 // to the same user. If you don't want to retry on fail, use send service.
 //
-// This is not safe at all because of the lack of time limit and try limit.
+// This is safer than Spam service.
 func SafeSpamWithCacheControll(
 	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
@@ -72,7 +72,7 @@ func SafeSpamWithCacheControll(
 		fmt.Sprintf("%s/messages", api.WABAIdURL),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	for key, value := range cacheControl.ToMap() {
 		req.Header.Add(key, value)
@@ -103,7 +103,7 @@ func SafeSpamWithCacheControll(
 // SafeSpam service retries to send message at most maxTries times if the request gets ignored byu cloud API. It can happen if you are trying to send 100 messages
 // to the same user. If you don't want to retry on fail, use send service.
 //
-// This is not safe at all because of the lack of time limit and try limit.
+// This is safer than Spam service.
 func SafeSpamMany(
 	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
@@ -153,7 +153,7 @@ func SafeSpamMany(
 // SafeSpam service retries to send message at most maxTries times if the request gets ignored byu cloud API. It can happen if you are trying to send 100 messages
 // to the same user. If you don't want to retry on fail, use send service.
 //
-// This is not safe at all because of the lack of time limit and try limit.
+// This is safer than Spam service.
 func SafeSpamManyWithCacheControll(
 	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,

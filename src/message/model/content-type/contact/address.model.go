@@ -1,3 +1,4 @@
+// Provides models to handle contact fields.
 package message_type_contact_model
 
 type Address struct {

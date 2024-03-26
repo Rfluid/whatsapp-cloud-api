@@ -1,3 +1,4 @@
+// Performs two step verification with pin.
 package two_step_verification_service
 
 import (
@@ -17,12 +18,15 @@ func AuthenticateWithPin(
 ) (common_model.SuccessResponse, error) {
 	jsonData, _ := json.Marshal(pin)
 
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		api.WABAIdURL,
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	if err != nil {
+		return common_model.SuccessResponse{}, err
+	}
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {

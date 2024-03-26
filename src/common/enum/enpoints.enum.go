@@ -1,3 +1,4 @@
+// Provides standard enums used throughout the application.
 package common_enum
 
 type Endpoint string

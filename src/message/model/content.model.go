@@ -1,3 +1,4 @@
+// Provides models to handle messages.
 package message_model
 
 import message_content_type_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type"

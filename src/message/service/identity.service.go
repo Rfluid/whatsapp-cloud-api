@@ -1,4 +1,4 @@
-package phone_verification_service
+package message_service
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
 	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
-	phone_verification_model "github.com/Rfluid/whatsapp-cloud-api/src/phone-verification/model"
+	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
 )
 
 // Sets or unsets identity check.
@@ -18,7 +18,7 @@ import (
 // to check examples of message with identity verification.
 func ConfigIdentityCheck(
 	api bootstrap_model.WhatsAppAPI,
-	data phone_verification_model.UserIdentityChangeConfig,
+	data message_model.UserIdentityChangeConfig,
 ) (common_model.SuccessResponse, error) {
 	jsonData, _ := json.Marshal(data)
 
@@ -27,7 +27,7 @@ func ConfigIdentityCheck(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.IdentitySettings),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {

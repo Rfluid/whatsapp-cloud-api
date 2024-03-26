@@ -1,3 +1,4 @@
+// Provides models to handle media.
 package media_model
 
 import common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"

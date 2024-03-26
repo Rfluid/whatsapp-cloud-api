@@ -1,3 +1,7 @@
+// Sends, spams and changes message status. You can also use this package
+// to config user identity check.
+//
+// Use the SendMessageStatusCheck function to check the status of your API.
 package message_service
 
 import (
@@ -28,7 +32,7 @@ func Send(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
@@ -62,7 +66,7 @@ func SendWithCacheControll(
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
-	req.Header = api.Headers
+	req.Header = api.JSONHeaders
 
 	for key, value := range cacheControl.ToMap() {
 		req.Header.Add(key, value)
