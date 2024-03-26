@@ -17,7 +17,7 @@ import (
 // See https://developers.facebook.com/docs/whatsapp/cloud-api/reference/phone-numbers#verify
 // to check examples of message with identity verification.
 func ConfigIdentityCheck(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data phone_verification_model.UserIdentityChangeConfig,
 ) (common_model.SuccessResponse, error) {
 	jsonData, _ := json.Marshal(data)

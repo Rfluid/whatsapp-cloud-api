@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type CloudApi struct {
+type WhatsAppAPI struct {
 	AccessToken string
 	WABAId      string
 	Version     string
@@ -16,13 +16,17 @@ type CloudApi struct {
 	Client      *http.Client
 }
 
-func (btp *CloudApi) SetWABAIdURL() {
-	btp.WABAIdURL = fmt.Sprintf("%s/%s/%s", btp.MainURL, btp.Version, btp.WABAId)
+func (btp *WhatsAppAPI) SetWABAIdURL(customUrl *string) {
+	if customUrl != nil {
+		btp.WABAIdURL = *customUrl
+	} else {
+		btp.WABAIdURL = fmt.Sprintf("%s/%s", btp.MainURL, btp.WABAId)
+	}
 }
 
-func (btp *CloudApi) SetAccessToken(
+func (btp *WhatsAppAPI) SetAccessToken(
 	accessToken string,
-) *CloudApi {
+) *WhatsAppAPI {
 	if accessToken != "" {
 		btp.AccessToken = accessToken
 	} else {
@@ -31,22 +35,22 @@ func (btp *CloudApi) SetAccessToken(
 	return btp
 }
 
-func (btp *CloudApi) SetWABAId(
+func (btp *WhatsAppAPI) SetWABAId(
 	waba string,
-) *CloudApi {
+) *WhatsAppAPI {
 	if waba != "" {
 		btp.WABAId = waba
 	} else {
-		log.Fatalln("Access token was not provided.")
+		log.Fatalln("WABA id was not provided.")
 	}
 	return btp
 }
 
-func (btp *CloudApi) SetVersion(
-	version string,
-) *CloudApi {
-	if version != "" {
-		btp.Version = version
+func (btp *WhatsAppAPI) SetVersion(
+	version *string,
+) *WhatsAppAPI {
+	if version != nil {
+		btp.Version = *version
 	}
 	// else {
 	// 	log.Println("Version not provided. Loading default...")
@@ -54,11 +58,14 @@ func (btp *CloudApi) SetVersion(
 	return btp
 }
 
-func (btp *CloudApi) SetMainURL(
-	prefix string,
-) *CloudApi {
-	if prefix != "" {
-		btp.MainURL = prefix
+func (btp *WhatsAppAPI) SetMainURL(
+	prefix *string,
+	customUrl *string,
+) *WhatsAppAPI {
+	if customUrl != nil {
+		btp.MainURL = *customUrl
+	} else if prefix != nil {
+		btp.MainURL = fmt.Sprintf("%s/%s", *prefix, btp.Version)
 	}
 	// else {
 	// 	log.Println("MainURL not provided. Loading default...")
@@ -67,7 +74,7 @@ func (btp *CloudApi) SetMainURL(
 	return btp
 }
 
-func (btp *CloudApi) SetHeaders() *CloudApi {
+func (btp *WhatsAppAPI) SetHeaders() *WhatsAppAPI {
 	btp.Headers = http.Header{
 		"Content-Type":  {"application/json"},
 		"Authorization": {fmt.Sprintf("Bearer %s", btp.AccessToken)},

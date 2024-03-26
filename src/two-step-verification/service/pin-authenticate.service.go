@@ -12,7 +12,7 @@ import (
 
 // Authenticates with pin.
 func AuthenticateWithPin(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	pin two_step_verification_model.Pin,
 ) (common_model.SuccessResponse, error) {
 	jsonData, _ := json.Marshal(pin)

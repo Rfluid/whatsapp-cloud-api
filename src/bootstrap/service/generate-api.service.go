@@ -6,10 +6,26 @@ import (
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 )
 
-func GenerateCloudAPI() bootstrap_model.CloudApi {
-	return bootstrap_model.CloudApi{
-		MainURL: "https://graph.facebook.com",
-		Version: "v19.0",
-		Client:  &http.Client{},
+func GenerateWhatsAppAPI(
+	accessToken string,
+	wabaId string,
+	version *string,
+	customMainURL *string,
+	customWABAIdURL *string,
+) bootstrap_model.WhatsAppAPI {
+	btp := bootstrap_model.WhatsAppAPI{
+		Client: &http.Client{},
 	}
+
+	if version == nil {
+		vrs := "v19.0"
+		version = &vrs
+	}
+
+	mainUrl := "https://graph.facebook.com"
+	mUrlP := &mainUrl
+
+	btp.SetVersion(version).SetAccessToken(accessToken).SetWABAId(wabaId).SetMainURL(mUrlP, customMainURL).SetHeaders().SetWABAIdURL(customWABAIdURL)
+
+	return btp
 }

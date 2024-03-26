@@ -13,7 +13,7 @@ import (
 
 // Changes message status.
 func SetStatus(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data message_model.MessageStatus,
 ) (message_model.Response, error) {
 	jsonData, _ := json.Marshal(data)

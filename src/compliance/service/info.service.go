@@ -14,7 +14,7 @@ import (
 
 // Gets compliance info.
 func Get(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 ) (compliance_model.Info, error) {
 	req, _ := http.NewRequest(
 		"GET",
@@ -38,7 +38,7 @@ func Get(
 
 // Creates a BusinessComplianceInfoSanitized (https://developers.facebook.com/docs/graph-api/reference/business-compliance-info-sanitized/).
 func Post(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data compliance_model.PostInfoPayload,
 ) (common_model.SuccessResponse, error) {
 	jsonData, _ := json.Marshal(data)

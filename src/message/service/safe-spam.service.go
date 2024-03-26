@@ -19,7 +19,7 @@ import (
 //
 // This is safer than Spam service.
 func SafeSpam(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
 	maxTries int,
 ) (message_model.Response, error) {
@@ -60,7 +60,7 @@ func SafeSpam(
 //
 // This is not safe at all because of the lack of time limit and try limit.
 func SafeSpamWithCacheControll(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 	maxTries int,
@@ -105,7 +105,7 @@ func SafeSpamWithCacheControll(
 //
 // This is not safe at all because of the lack of time limit and try limit.
 func SafeSpamMany(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	maxTries int,
 ) ([](message_model.Response), []error) {
@@ -150,7 +150,7 @@ func SafeSpamMany(
 //
 // This is not safe at all because of the lack of time limit and try limit.
 func SafeSpamManyWithCacheControll(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 	maxTries int,
@@ -187,7 +187,7 @@ func SafeSpamManyWithCacheControll(
 
 // Same as SafeSpamMany but applies a callback for each result.
 func SafeSpamManyWithCallback(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	maxTries int,
 	callback func(message_model.Message, message_model.Response, error),
@@ -210,7 +210,7 @@ func SafeSpamManyWithCallback(
 
 // Same as SafeSpamWithCacheControll but applies a callback for each result.
 func SafeSpamManyWithCacheControllAndCallback(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 	maxTries int,

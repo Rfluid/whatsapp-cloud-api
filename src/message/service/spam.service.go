@@ -20,7 +20,7 @@ import (
 //
 // This is not safe at all because of the lack of time limit and try limit.
 func Spam(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
 ) (message_model.Response, error) {
 	jsonData, _ := json.Marshal(data)
@@ -59,7 +59,7 @@ func Spam(
 //
 // This is not safe at all because of the lack of time limit and try limit.
 func SpamWithCacheControll(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 ) (message_model.Response, error) {
@@ -103,7 +103,7 @@ func SpamWithCacheControll(
 //
 // This is not safe at all because of the lack of time limit and try limit.
 func SpamMany(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 ) ([](message_model.Response), []error) {
 	var mu sync.Mutex
@@ -148,7 +148,7 @@ func SpamMany(
 //
 // This is not safe at all because of the lack of time limit and try limit.
 func SpamManyWithCacheControll(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 ) ([](message_model.Response), []error) {
@@ -184,7 +184,7 @@ func SpamManyWithCacheControll(
 
 // Same as SpamMany but applies a callback for each result.
 func SpamManyWithCallback(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	callback func(message_model.Message, message_model.Response, error),
 ) {
@@ -206,7 +206,7 @@ func SpamManyWithCallback(
 
 // Same as SpamWithCacheControll but applies a callback for each result.
 func SpamManyWithCacheControllAndCallback(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 	callback func(message_model.Message, message_model.Response, error),

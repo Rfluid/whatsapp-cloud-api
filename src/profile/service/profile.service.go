@@ -14,7 +14,7 @@ import (
 //
 // @fields Are the fields that must be returned by query.
 func GetProfile(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	fields []profile_model.BusinessProfileField,
 ) (profile_model.BusinessProfile, error) {
 	fieldsStr := ""

@@ -14,7 +14,7 @@ import (
 
 // Register WhatsApp business number.
 func Register(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data register_model.Register,
 ) (common_model.SuccessResponse, error) {
 	jsonData, _ := json.Marshal(data)
@@ -41,7 +41,7 @@ func Register(
 
 // Deregister WhatsApp business number.
 func DeRegister(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 ) (common_model.SuccessResponse, error) {
 	req, _ := http.NewRequest(
 		"POST",

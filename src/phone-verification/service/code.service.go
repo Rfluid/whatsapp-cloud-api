@@ -15,7 +15,7 @@ import (
 
 // Requests phone verification code.
 func RequestCode(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data phone_verification_model.RequestCode,
 ) (common_model.SuccessResponse, error) {
 	formData := url.Values{}
@@ -44,7 +44,7 @@ func RequestCode(
 
 // Verifies phone verification code.
 func VerifyCode(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data phone_verification_model.VerifyCode,
 ) (common_model.SuccessResponse, error) {
 	formData := url.Values{}

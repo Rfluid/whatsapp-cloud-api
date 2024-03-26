@@ -7,7 +7,7 @@ import (
 
 // Checks API health sending hello_world template to receiverNumber.
 func SendMessageStatusCheck(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	receiverNumber string,
 ) (message_model.Response, error) {
 	msg := message_model.Message{

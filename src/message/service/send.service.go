@@ -18,7 +18,7 @@ import (
 // by WhatsApp. It can happen if you are trying to send 100 messages
 // to the same user. If you want to retry on fail, use spam service.
 func Send(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
 ) (message_model.Response, error) {
 	jsonData, _ := json.Marshal(data)
@@ -51,7 +51,7 @@ func Send(
 // by WhatsApp. It can happen if you are trying to send 100 messages
 // to the same user. If you want to retry on fail, use spam service.
 func SendWithCacheControll(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 ) (message_model.Response, error) {
@@ -89,7 +89,7 @@ func SendWithCacheControll(
 // by WhatsApp. It can happen if you are trying to send 100 messages
 // to the same user. If you want to retry on fail, use spam service.
 func SendMany(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 ) ([](message_model.Response), []error) {
 	var mu sync.Mutex
@@ -132,7 +132,7 @@ func SendMany(
 // by WhatsApp. It can happen if you are trying to send 100 messages
 // to the same user. If you want to retry on fail, use spam service.
 func SendManyWithCacheControll(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 ) ([](message_model.Response), []error) {
@@ -168,7 +168,7 @@ func SendManyWithCacheControll(
 
 // Same as SendMany but applies a callback for each result.
 func SendManyWithCallback(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	callback func(message_model.Message, message_model.Response, error),
 ) {
@@ -190,7 +190,7 @@ func SendManyWithCallback(
 
 // Same as SendWithCacheControll but applies a callback for each result.
 func SendManyWithCacheControllAndCallback(
-	api bootstrap_model.CloudApi,
+	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 	callback func(message_model.Message, message_model.Response, error),
