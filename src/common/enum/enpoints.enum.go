@@ -11,4 +11,5 @@ const (
 	BusinessProfile        Endpoint = "whatsapp_business_profile"
 	Register               Endpoint = "register"
 	DeRegister             Endpoint = "deregister"
+	Media                  Endpoint = "media"
 )
