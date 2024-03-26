@@ -1,4 +1,4 @@
-// Package to handle media.
+// Handles media functions.
 //
 // To complete some of the following API calls, you need to have
 // a media ID. There are two ways to get this ID:

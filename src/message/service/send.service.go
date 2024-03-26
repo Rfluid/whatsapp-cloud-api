@@ -1,3 +1,7 @@
+// Sends, spams and changes message status. You can also use this package
+// to config user identity check.
+//
+// Use the SendMessageStatusCheck function to check the status of your API.
 package message_service
 
 import (

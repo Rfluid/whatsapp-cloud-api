@@ -1,3 +1,4 @@
+// Modules to handle WhatsApp business profile validation.
 package profile_model
 
 type BusinessProfileField string

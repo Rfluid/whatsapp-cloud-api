@@ -1,3 +1,4 @@
+// Provides models to handle compliance services.
 package compliance_model
 
 type CustomerCareDetails struct {

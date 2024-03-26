@@ -1,3 +1,4 @@
+// Provides modules to bootstrap API.
 package bootstrap_model
 
 import (

@@ -1,3 +1,4 @@
+// Handles number registering to WhatsApp.
 package register_service
 
 import (

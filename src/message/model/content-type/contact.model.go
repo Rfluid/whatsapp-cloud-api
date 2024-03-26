@@ -1,3 +1,4 @@
+// Handles content validation.
 package message_content_type_model
 
 import (

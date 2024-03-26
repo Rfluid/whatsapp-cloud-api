@@ -1,3 +1,4 @@
+// Provides models to handle number registering validation.
 package register_model
 
 import (

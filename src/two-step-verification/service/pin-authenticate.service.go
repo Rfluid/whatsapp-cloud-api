@@ -1,3 +1,4 @@
+// Performs two step verification with pin.
 package two_step_verification_service
 
 import (

@@ -1,3 +1,4 @@
+// Queries the WhatsApp busines profile that your API is using.
 package profile_service
 
 import (

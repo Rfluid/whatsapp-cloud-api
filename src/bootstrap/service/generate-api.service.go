@@ -1,3 +1,4 @@
+// Useful functions to bootstrap the API.
 package bootstrap_service
 
 import (

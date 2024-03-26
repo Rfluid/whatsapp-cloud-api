@@ -1,3 +1,4 @@
+// Handles phone validation with code.
 package phone_verification_service
 
 import (
