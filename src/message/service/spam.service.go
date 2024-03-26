@@ -106,8 +106,8 @@ func SpamMany(
 	api bootstrap_model.WhatsAppAPI,
 	data []message_model.Message,
 ) ([](message_model.Response), []error) {
-	var mu sync.Mutex
-	var errMu sync.Mutex
+	respCh := make(chan message_model.Response)
+	errCh := make(chan error)
 	responses := []message_model.Response{}
 	errs := []error{}
 	var wg sync.WaitGroup
@@ -121,17 +121,20 @@ func SpamMany(
 			response, err := Spam(api, msg)
 
 			if err == nil {
-				mu.Lock()
-				responses = append(responses, response)
-				mu.Unlock()
+				respCh <- response
 			} else {
-				errMu.Lock()
-				errs = append(errs, err)
-				errMu.Unlock()
+				errCh <- err
 			}
 		}(msg)
 	}
 	wg.Wait()
+
+	for response := range respCh {
+		responses = append(responses, response)
+	}
+	for err := range errCh {
+		errs = append(errs, err)
+	}
 
 	return responses, errs
 }
@@ -152,8 +155,8 @@ func SpamManyWithCacheControll(
 	data []message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 ) ([](message_model.Response), []error) {
-	var mu sync.Mutex
-	var errMu sync.Mutex
+	respCh := make(chan message_model.Response)
+	errCh := make(chan error)
 	responses := []message_model.Response{}
 	errs := []error{}
 	var wg sync.WaitGroup
@@ -167,17 +170,20 @@ func SpamManyWithCacheControll(
 			response, err := SpamWithCacheControll(api, msg, cacheControl)
 
 			if err == nil {
-				mu.Lock()
-				responses = append(responses, response)
-				mu.Unlock()
+				respCh <- response
 			} else {
-				errMu.Lock()
-				errs = append(errs, err)
-				errMu.Unlock()
+				errCh <- err
 			}
 		}(msg)
 	}
 	wg.Wait()
+
+	for response := range respCh {
+		responses = append(responses, response)
+	}
+	for err := range errCh {
+		errs = append(errs, err)
+	}
 
 	return responses, errs
 }

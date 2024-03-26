@@ -109,8 +109,8 @@ func SafeSpamMany(
 	data []message_model.Message,
 	maxTries int,
 ) ([](message_model.Response), []error) {
-	var mu sync.Mutex
-	var errMu sync.Mutex
+	respCh := make(chan message_model.Response)
+	errCh := make(chan error)
 	responses := []message_model.Response{}
 	errs := []error{}
 	var wg sync.WaitGroup
@@ -124,16 +124,21 @@ func SafeSpamMany(
 			response, err := SafeSpam(api, msg, maxTries)
 
 			if err == nil {
-				mu.Lock()
-				responses = append(responses, response)
-				mu.Unlock()
+				respCh <- response
 			} else {
-				errMu.Lock()
-				errs = append(errs, err)
-				errMu.Unlock()
+				errCh <- err
 			}
 		}(msg)
 	}
+
+	for response := range respCh {
+		responses = append(responses, response)
+	}
+
+	for err := range errCh {
+		errs = append(errs, err)
+	}
+
 	wg.Wait()
 
 	return responses, errs
@@ -155,8 +160,8 @@ func SafeSpamManyWithCacheControll(
 	cacheControl message_model.MediaCacheControl,
 	maxTries int,
 ) ([](message_model.Response), []error) {
-	var mu sync.Mutex
-	var errMu sync.Mutex
+	respCh := make(chan message_model.Response)
+	errCh := make(chan error)
 	responses := []message_model.Response{}
 	errs := []error{}
 	var wg sync.WaitGroup
@@ -170,17 +175,20 @@ func SafeSpamManyWithCacheControll(
 			response, err := SafeSpamWithCacheControll(api, msg, cacheControl, maxTries)
 
 			if err == nil {
-				mu.Lock()
-				responses = append(responses, response)
-				mu.Unlock()
+				respCh <- response
 			} else {
-				errMu.Lock()
-				errs = append(errs, err)
-				errMu.Unlock()
+				errCh <- err
 			}
 		}(msg)
 	}
 	wg.Wait()
+
+	for response := range respCh {
+		responses = append(responses, response)
+	}
+	for err := range errCh {
+		errs = append(errs, err)
+	}
 
 	return responses, errs
 }
