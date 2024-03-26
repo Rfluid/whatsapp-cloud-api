@@ -17,6 +17,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
@@ -31,13 +32,14 @@ func Upload(
 	api bootstrap_model.WhatsAppAPI,
 	data media_model.Upload,
 ) (common_model.Id, error) {
-	jsonData, _ := json.Marshal(data)
-
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Media),
-		bytes.NewBuffer(jsonData),
+		bytes.NewBufferString(data.ToURLValues().Encode()),
 	)
+	if err != nil {
+		return common_model.Id{}, err
+	}
 	req.Header = api.Headers
 
 	resp, err := api.Client.Do(req)
@@ -65,8 +67,10 @@ func RetrieveURL(
 	mediaId string,
 	data media_model.RetrieveInfo,
 ) (media_model.MediaInfo, error) {
-	jsonData, _ := json.Marshal(data)
-
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return media_model.MediaInfo{}, err
+	}
 	req, _ := http.NewRequest(
 		"GET",
 		fmt.Sprintf("%s/%s", api.MainURL, mediaId),
@@ -92,11 +96,14 @@ func Delete(
 	api bootstrap_model.WhatsAppAPI,
 	mediaId string,
 ) (common_model.SuccessResponse, error) {
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"DELETE",
 		fmt.Sprintf("%s/%s", api.MainURL, mediaId),
 		nil,
 	)
+	if err != nil {
+		return common_model.SuccessResponse{}, err
+	}
 	req.Header = api.Headers
 
 	resp, err := api.Client.Do(req)
@@ -112,26 +119,33 @@ func Delete(
 	return body, nil
 }
 
+// Downloads media from URL.
 func Download(
 	api bootstrap_model.WhatsAppAPI,
 	url string,
-) (common_model.SuccessResponse, error) {
-	req, _ := http.NewRequest(
+) ([]byte, error) {
+	req, err := http.NewRequest(
 		"GET",
 		url,
 		nil,
 	)
+	if err != nil {
+		return []byte{}, err
+	}
+
 	req.Header = api.Headers
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
-		return common_model.SuccessResponse{}, err
+		return []byte{}, err
 	}
 	defer resp.Body.Close()
 
-	var body common_model.SuccessResponse
+	mediaBytes, err := io.ReadAll(resp.Body)
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	if err != nil {
+		return []byte{}, err
+	}
 
-	return body, nil
+	return mediaBytes, nil
 }
