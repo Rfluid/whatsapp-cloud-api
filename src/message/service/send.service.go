@@ -25,13 +25,19 @@ func Send(
 	api bootstrap_model.WhatsAppAPI,
 	data message_model.Message,
 ) (message_model.Response, error) {
-	jsonData, _ := json.Marshal(data)
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return message_model.Response{}, err
+	}
 
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
+	if err != nil {
+		return message_model.Response{}, err
+	}
 	req.Header = api.JSONHeaders
 
 	resp, err := api.Client.Do(req)
@@ -59,13 +65,19 @@ func SendWithCacheControll(
 	data message_model.Message,
 	cacheControl message_model.MediaCacheControl,
 ) (message_model.Response, error) {
-	jsonData, _ := json.Marshal(data)
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return message_model.Response{}, err
+	}
 
-	req, _ := http.NewRequest(
+	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
+	if err != nil {
+		return message_model.Response{}, err
+	}
 	req.Header = api.JSONHeaders
 
 	for key, value := range cacheControl.ToMap() {
