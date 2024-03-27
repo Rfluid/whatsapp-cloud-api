@@ -127,7 +127,12 @@ func SpamMany(
 			}
 		}(msg)
 	}
-	wg.Wait()
+
+	go func() {
+		wg.Wait()
+		close(respCh)
+		close(errCh)
+	}()
 
 	for response := range respCh {
 		responses = append(responses, response)
@@ -176,7 +181,12 @@ func SpamManyWithCacheControll(
 			}
 		}(msg)
 	}
-	wg.Wait()
+
+	go func() {
+		wg.Wait()
+		close(respCh)
+		close(errCh)
+	}()
 
 	for response := range respCh {
 		responses = append(responses, response)

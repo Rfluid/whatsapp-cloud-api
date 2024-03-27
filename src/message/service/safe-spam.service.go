@@ -131,6 +131,12 @@ func SafeSpamMany(
 		}(msg)
 	}
 
+	go func() {
+		wg.Wait()
+		close(respCh)
+		close(errCh)
+	}()
+
 	for response := range respCh {
 		responses = append(responses, response)
 	}
@@ -138,8 +144,6 @@ func SafeSpamMany(
 	for err := range errCh {
 		errs = append(errs, err)
 	}
-
-	wg.Wait()
 
 	return responses, errs
 }
@@ -181,7 +185,12 @@ func SafeSpamManyWithCacheControll(
 			}
 		}(msg)
 	}
-	wg.Wait()
+
+	go func() {
+		wg.Wait()
+		close(respCh)
+		close(errCh)
+	}()
 
 	for response := range respCh {
 		responses = append(responses, response)

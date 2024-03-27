@@ -129,7 +129,12 @@ func SendMany(
 			}
 		}(msg)
 	}
-	wg.Wait()
+
+	go func() {
+		wg.Wait()
+		close(respCh)
+		close(errCh)
+	}()
 
 	for response := range respCh {
 		responses = append(responses, response)
@@ -176,7 +181,12 @@ func SendManyWithCacheControll(
 			}
 		}(msg)
 	}
-	wg.Wait()
+
+	go func() {
+		wg.Wait()
+		close(respCh)
+		close(errCh)
+	}()
 
 	for response := range respCh {
 		responses = append(responses, response)
