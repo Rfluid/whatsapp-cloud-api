@@ -3,6 +3,7 @@ package profile_service
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -48,8 +49,9 @@ func GetProfile(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return profile_model.BusinessProfile{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return profile_model.BusinessProfile{}, errors.New(errCnt)
 	}
 
 	var body profile_model.BusinessProfile

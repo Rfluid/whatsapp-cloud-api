@@ -98,8 +98,9 @@ func SendWithCacheControll(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return message_model.Response{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return message_model.Response{}, errors.New(errCnt)
 	}
 
 	var body message_model.Response

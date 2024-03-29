@@ -16,6 +16,7 @@ package media_service
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -49,8 +50,9 @@ func Upload(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return common_model.Id{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return common_model.Id{}, errors.New(errCnt)
 	}
 
 	var body common_model.Id
@@ -90,8 +92,9 @@ func RetrieveURL(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return media_model.MediaInfo{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return media_model.MediaInfo{}, errors.New(errCnt)
 	}
 
 	var body media_model.MediaInfo
@@ -123,8 +126,9 @@ func Delete(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return common_model.SuccessResponse{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return common_model.SuccessResponse{}, errors.New(errCnt)
 	}
 
 	var body common_model.SuccessResponse
@@ -157,8 +161,9 @@ func Download(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return []byte{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return []byte{}, errors.New(errCnt)
 	}
 
 	mediaBytes, err := io.ReadAll(resp.Body)

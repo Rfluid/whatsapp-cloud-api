@@ -4,6 +4,7 @@ package phone_verification_service
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -36,8 +37,9 @@ func RequestCode(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return common_model.SuccessResponse{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return common_model.SuccessResponse{}, errors.New(errCnt)
 	}
 
 	var body common_model.SuccessResponse
@@ -70,8 +72,9 @@ func VerifyCode(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return common_model.SuccessResponse{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return common_model.SuccessResponse{}, errors.New(errCnt)
 	}
 
 	var body common_model.SuccessResponse
