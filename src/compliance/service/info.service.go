@@ -30,6 +30,11 @@ func Get(
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return compliance_model.Info{}, err
+	}
+
 	var body compliance_model.Info
 
 	json.NewDecoder(resp.Body).Decode(&body)
@@ -63,6 +68,11 @@ func Post(
 		return common_model.SuccessResponse{}, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return common_model.SuccessResponse{}, err
+	}
 
 	var body common_model.SuccessResponse
 

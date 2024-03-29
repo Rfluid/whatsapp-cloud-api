@@ -38,6 +38,11 @@ func Spam(
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return message_model.Response{}, err
+	}
+
 	var body message_model.Response
 
 	json.NewDecoder(resp.Body).Decode(&body)
@@ -81,6 +86,11 @@ func SpamWithCacheControll(
 		return message_model.Response{}, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return message_model.Response{}, err
+	}
 
 	var body message_model.Response
 

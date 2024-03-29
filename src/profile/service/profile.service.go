@@ -47,6 +47,11 @@ func GetProfile(
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return profile_model.BusinessProfile{}, err
+	}
+
 	var body profile_model.BusinessProfile
 
 	json.NewDecoder(resp.Body).Decode(&body)

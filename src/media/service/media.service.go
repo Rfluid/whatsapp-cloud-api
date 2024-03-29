@@ -48,6 +48,11 @@ func Upload(
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return common_model.Id{}, err
+	}
+
 	var body common_model.Id
 
 	json.NewDecoder(resp.Body).Decode(&body)
@@ -84,6 +89,11 @@ func RetrieveURL(
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return media_model.MediaInfo{}, err
+	}
+
 	var body media_model.MediaInfo
 
 	json.NewDecoder(resp.Body).Decode(&body)
@@ -111,6 +121,11 @@ func Delete(
 		return common_model.SuccessResponse{}, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return common_model.SuccessResponse{}, err
+	}
 
 	var body common_model.SuccessResponse
 
@@ -140,6 +155,11 @@ func Download(
 		return []byte{}, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return []byte{}, err
+	}
 
 	mediaBytes, err := io.ReadAll(resp.Body)
 

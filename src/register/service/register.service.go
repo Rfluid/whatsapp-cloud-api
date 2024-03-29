@@ -39,6 +39,11 @@ func Register(
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return common_model.SuccessResponse{}, err
+	}
+
 	var body common_model.SuccessResponse
 
 	json.NewDecoder(resp.Body).Decode(&body)
@@ -65,6 +70,11 @@ func DeRegister(
 		return common_model.SuccessResponse{}, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		json.NewDecoder(resp.Body).Decode(&err)
+		return common_model.SuccessResponse{}, err
+	}
 
 	var body common_model.SuccessResponse
 
