@@ -7,6 +7,7 @@ package message_service
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"sync"
@@ -47,8 +48,9 @@ func Send(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		json.NewDecoder(resp.Body).Decode(&err)
-		return message_model.Response{}, err
+		var errCnt string
+		json.NewDecoder(resp.Body).Decode(&errCnt)
+		return message_model.Response{}, errors.New(errCnt)
 	}
 
 	var body message_model.Response
