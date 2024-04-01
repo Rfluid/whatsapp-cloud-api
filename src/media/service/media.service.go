@@ -50,9 +50,15 @@ func Upload(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return common_model.Id{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return common_model.Id{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return common_model.Id{}, err
+		}
+		return common_model.Id{}, errors.New(string(errMsgBytes))
 	}
 
 	var body common_model.Id
@@ -92,9 +98,15 @@ func RetrieveURL(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return media_model.MediaInfo{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return media_model.MediaInfo{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return media_model.MediaInfo{}, err
+		}
+		return media_model.MediaInfo{}, errors.New(string(errMsgBytes))
 	}
 
 	var body media_model.MediaInfo
@@ -126,9 +138,15 @@ func Delete(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return common_model.SuccessResponse{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return common_model.SuccessResponse{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return common_model.SuccessResponse{}, err
+		}
+		return common_model.SuccessResponse{}, errors.New(string(errMsgBytes))
 	}
 
 	var body common_model.SuccessResponse
@@ -161,9 +179,15 @@ func Download(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return []byte{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return []byte{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return []byte{}, err
+		}
+		return []byte{}, errors.New(string(errMsgBytes))
 	}
 
 	mediaBytes, err := io.ReadAll(resp.Body)

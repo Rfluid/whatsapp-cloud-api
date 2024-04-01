@@ -32,9 +32,15 @@ func Get(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return compliance_model.Info{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return compliance_model.Info{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return compliance_model.Info{}, err
+		}
+		return compliance_model.Info{}, errors.New(string(errMsgBytes))
 	}
 
 	var body compliance_model.Info
@@ -72,9 +78,15 @@ func Post(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return common_model.SuccessResponse{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return common_model.SuccessResponse{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return common_model.SuccessResponse{}, err
+		}
+		return common_model.SuccessResponse{}, errors.New(string(errMsgBytes))
 	}
 
 	var body common_model.SuccessResponse

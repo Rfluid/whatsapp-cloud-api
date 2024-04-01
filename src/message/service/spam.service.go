@@ -40,9 +40,15 @@ func Spam(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return message_model.Response{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return message_model.Response{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return message_model.Response{}, err
+		}
+		return message_model.Response{}, errors.New(string(errMsgBytes))
 	}
 
 	var body message_model.Response
@@ -90,9 +96,15 @@ func SpamWithCacheControll(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return message_model.Response{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return message_model.Response{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return message_model.Response{}, err
+		}
+		return message_model.Response{}, errors.New(string(errMsgBytes))
 	}
 
 	var body message_model.Response

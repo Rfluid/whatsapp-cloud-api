@@ -49,9 +49,15 @@ func GetProfile(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errCnt string
-		json.NewDecoder(resp.Body).Decode(&errCnt)
-		return profile_model.BusinessProfile{}, errors.New(errCnt)
+		var errInt map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
+			return profile_model.BusinessProfile{}, err
+		}
+		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		if err != nil {
+			return profile_model.BusinessProfile{}, err
+		}
+		return profile_model.BusinessProfile{}, errors.New(string(errMsgBytes))
 	}
 
 	var body profile_model.BusinessProfile
