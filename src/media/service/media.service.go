@@ -33,10 +33,16 @@ func Upload(
 	api bootstrap_model.WhatsAppAPI,
 	data media_model.Upload,
 ) (common_model.Id, error) {
+	data.SetDefault()
+	file, err := data.ToFormValues()
+	if err != nil {
+		return common_model.Id{}, err
+	}
+
 	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Media),
-		bytes.NewBufferString(data.ToURLValues().Encode()),
+		file,
 	)
 	if err != nil {
 		return common_model.Id{}, err
