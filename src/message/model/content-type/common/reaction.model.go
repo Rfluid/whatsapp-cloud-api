@@ -1,4 +1,4 @@
-package message_content_type_model
+package message_type_common_model
 
 import (
 	"errors"
