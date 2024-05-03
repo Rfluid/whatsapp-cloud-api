@@ -10,4 +10,6 @@ const (
 	Video    ParameterType = "video"
 	Sticker  ParameterType = "sticker"
 	Document ParameterType = "document"
+	Button   ParameterType = "button"
+	Payload  ParameterType = "payload"
 )
