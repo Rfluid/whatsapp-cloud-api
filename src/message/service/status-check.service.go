@@ -2,7 +2,9 @@ package message_service
 
 import (
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
+	message_content_type_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type"
 )
 
 // Checks API health sending hello_world template to receiverNumber.
@@ -16,11 +18,9 @@ func SendMessageStatusCheck(
 			Type: message_model.Template,
 		},
 		Content: message_model.Content{
-			Template: map[string]interface{}{
-				"name": "hello_world",
-				"language": map[string]string{
-					"code": "en_US",
-				},
+			Template: &message_content_type_model.Template{
+				Name:     "hello_world",
+				Language: common_model.Language{Code: "en_US"},
 			},
 		},
 	}
