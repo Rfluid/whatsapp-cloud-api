@@ -12,7 +12,7 @@ type Parameter struct {
 	Document *media_model.UseMedia               `json:"document,omitempty"`
 	Audio    *media_model.UseMedia               `json:"audio,omitempty"`
 	Sticker  *media_model.UseMedia               `json:"sticker,omitempty"`
-	Text     *message_type_common_model.Text     `json:"text,omitempty"`
 	DateTime *message_type_common_model.DateTime `json:"date_time,omitempty"`
+	Currency *message_type_common_model.Currency `json:"currency,omitempty"`
 	message_type_common_model.Button
 }
