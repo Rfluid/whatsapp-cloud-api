@@ -3,6 +3,7 @@ package message_content_type_model
 import (
 	"errors"
 	"strings"
+	"sync"
 )
 
 // Reaction messages.
@@ -15,9 +16,12 @@ type Reaction struct {
 func (r *Reaction) Validate() error {
 	messageSplitted := strings.Split(r.MessageId, ".")
 
-	ch := make(chan error)
+	ch := make(chan error, 2)
+	var wg sync.WaitGroup
 
+	wg.Add(1)
 	go func() {
+		defer wg.Done()
 		if messageSplitted[0] != "wamid" {
 			ch <- errors.New("the message_id of your reaction is not valid. It should start with \"wamid\"")
 		} else {
@@ -25,7 +29,9 @@ func (r *Reaction) Validate() error {
 		}
 	}()
 
+	wg.Add(1)
 	go func() {
+		defer wg.Done()
 		if len(messageSplitted) < 2 {
 			ch <- errors.New("the message_id of your reaction is not valid. It should be something like \"wamid.HBgLM...\"")
 		} else {
@@ -33,8 +39,15 @@ func (r *Reaction) Validate() error {
 		}
 	}()
 
-	if err := <-ch; err != nil {
-		return err
+	go func() {
+		defer close(ch)
+		wg.Wait()
+	}()
+
+	for err := range ch {
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
