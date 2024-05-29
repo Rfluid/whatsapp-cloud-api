@@ -3,8 +3,10 @@ package bootstrap_model
 
 import (
 	"fmt"
-	"log"
 	"net/http"
+	"os"
+
+	"github.com/pterm/pterm"
 )
 
 type WhatsAppAPI struct {
@@ -21,19 +23,19 @@ type WhatsAppAPI struct {
 func (btp *WhatsAppAPI) SetWABAIdURL(customUrl *string) {
 	if customUrl != nil {
 		btp.WABAIdURL = *customUrl
-	} else {
-		btp.WABAIdURL = fmt.Sprintf("%s/%s", btp.MainURL, btp.WABAId)
+		return
 	}
+	btp.WABAIdURL = fmt.Sprintf("%s/%s", btp.MainURL, btp.WABAId)
 }
 
 func (btp *WhatsAppAPI) SetAccessToken(
 	accessToken string,
 ) *WhatsAppAPI {
-	if accessToken != "" {
-		btp.AccessToken = accessToken
-	} else {
-		log.Fatalln("Access token was not provided.")
+	if accessToken == "" {
+		pterm.DefaultLogger.Error("Access token was not provided.")
+		os.Exit(1)
 	}
+	btp.AccessToken = accessToken
 	return btp
 }
 
@@ -43,7 +45,8 @@ func (btp *WhatsAppAPI) SetWABAId(
 	if waba != "" {
 		btp.WABAId = waba
 	} else {
-		log.Fatalln("WABA id was not provided.")
+		pterm.DefaultLogger.Error("WABA id was not provided.")
+		os.Exit(1)
 	}
 	return btp
 }
@@ -54,9 +57,6 @@ func (btp *WhatsAppAPI) SetVersion(
 	if version != nil {
 		btp.Version = *version
 	}
-	// else {
-	// 	log.Println("Version not provided. Loading default...")
-	// }
 	return btp
 }
 
@@ -69,9 +69,6 @@ func (btp *WhatsAppAPI) SetMainURL(
 	} else if prefix != nil {
 		btp.MainURL = fmt.Sprintf("%s/%s", *prefix, btp.Version)
 	}
-	// else {
-	// 	log.Println("MainURL not provided. Loading default...")
-	// }
 
 	return btp
 }
