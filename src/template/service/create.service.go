@@ -13,6 +13,8 @@ import (
 )
 
 // Creates template.
+//
+// Docs: https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates/
 func Create(
 	api bootstrap_model.WhatsAppAPI,
 	data template_model.CreateTemplate,
