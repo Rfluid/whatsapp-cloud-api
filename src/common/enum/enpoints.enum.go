@@ -13,5 +13,5 @@ const (
 	Register               Endpoint = "register"
 	DeRegister             Endpoint = "deregister"
 	Media                  Endpoint = "media"
-	Templates              Endpoint = "message_templates"
+	MessageTemplates       Endpoint = "message_templates"
 )
