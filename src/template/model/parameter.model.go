@@ -1,4 +1,4 @@
-package message_type_template_model
+package template_model
 
 import (
 	media_model "github.com/Rfluid/whatsapp-cloud-api/src/media/model"
@@ -7,6 +7,7 @@ import (
 
 type Parameter struct {
 	Type     ParameterType                       `json:"type"`
+	Text     string                              `json:"text,omitempty"`
 	Image    *media_model.UseMedia               `json:"image,omitempty"`
 	Video    *media_model.UseMedia               `json:"video,omitempty"`
 	Document *media_model.UseMedia               `json:"document,omitempty"`
