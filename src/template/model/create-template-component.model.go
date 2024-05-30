@@ -5,8 +5,8 @@ import (
 	message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/common"
 )
 
-type Parameter struct {
-	Type     ParameterType                       `json:"type"`
+type CreateTemplateComponent struct {
+	Type     ComponentType                       `json:"type"`
 	Text     string                              `json:"text,omitempty"`
 	Image    *media_model.UseMedia               `json:"image,omitempty"`
 	Video    *media_model.UseMedia               `json:"video,omitempty"`
@@ -15,5 +15,6 @@ type Parameter struct {
 	Sticker  *media_model.UseMedia               `json:"sticker,omitempty"`
 	DateTime *message_type_common_model.DateTime `json:"date_time,omitempty"`
 	Currency *message_type_common_model.Currency `json:"currency,omitempty"`
-	message_type_common_model.Button
+	Buttons  *[]message_type_common_model.Button `json:"buttons,omitempty"`
+	// TODO: Add example.
 }
