@@ -1,4 +1,4 @@
-package message_type_template_model
+package template_model
 
 type ComponentType string
 

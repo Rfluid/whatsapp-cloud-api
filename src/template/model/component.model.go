@@ -1,4 +1,4 @@
-package message_type_template_model
+package template_model
 
 import message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/common"
 
