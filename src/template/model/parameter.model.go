@@ -1,3 +1,4 @@
+// Provides models to manage templates.
 package template_model
 
 import (
