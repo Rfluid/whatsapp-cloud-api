@@ -1,2 +1,8 @@
 # Environmental variables
 .env
+
+# Build result
+whatsapp-cloud-api
+
+# Tests
+tests.go

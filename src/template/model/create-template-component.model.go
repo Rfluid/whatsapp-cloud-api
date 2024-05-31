@@ -16,5 +16,6 @@ type CreateTemplateComponent struct {
 	DateTime *message_type_common_model.DateTime `json:"date_time,omitempty"`
 	Currency *message_type_common_model.Currency `json:"currency,omitempty"`
 	Buttons  *[]message_type_common_model.Button `json:"buttons,omitempty"`
-	// TODO: Add example.
+
+	Example *ComponentExample `json:"example"`
 }
