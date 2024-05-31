@@ -24,7 +24,7 @@ func GetProfile(
 	if len(fields) > 0 {
 		fieldsStr += string(fields[0])
 		for _, field := range fields[1:] {
-			fieldsStr += fmt.Sprintf(", %s", field)
+			fieldsStr += fmt.Sprintf(",%s", field)
 		}
 	}
 
