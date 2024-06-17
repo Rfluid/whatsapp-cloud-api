@@ -21,6 +21,8 @@ type Content struct {
 	Template    *template_model.UseTemplate           `json:"template,omitempty"`
 	Interactive interface{}                           `json:"interactive,omitempty"`
 	Contacts    *[]message_content_type_model.Contact `json:"contacts,omitempty"`
+	Button      *message_type_common_model.Button     `json:"button,omitempty"`
+	Order       *message_type_common_model.Order      `json:"order,omitempty"`
 }
 
 // TODO: Add validate content method.

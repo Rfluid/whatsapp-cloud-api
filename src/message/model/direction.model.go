@@ -6,3 +6,8 @@ type Direction struct {
 	To   string `json:"to"`   // Whatsapp ID of receiver.
 	Type Type   `json:"type"` // Type of message.
 }
+
+type ReceivedDirection struct {
+	Id   string `json:"id"`   // The ID for the message that was received by the business. You could use messages endpoint to mark this specific message as read.
+	From string `json:"from"` // The customer's WhatsApp ID. A business can respond to a customer using this ID. This ID may not match the customer's phone number, which is returned by the API as input when sending a message to the customer.
+}
