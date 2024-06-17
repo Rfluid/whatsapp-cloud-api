@@ -1,6 +1,9 @@
 package message_model
 
-type Type string
+type (
+	ReceiveType string
+	Type        ReceiveType
+)
 
 const (
 	Text        Type = "text"
@@ -15,4 +18,12 @@ const (
 	Audio    Type = "audio"
 	Sticker  Type = "sticker"
 	Document Type = "document"
+
+	Button Type = "button"
+	Order  Type = "order"
+)
+
+const (
+	SystemReceiveType ReceiveType = "system"
+	Unknown           ReceiveType = "unknown"
 )
