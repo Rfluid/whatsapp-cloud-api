@@ -41,6 +41,10 @@ func SafeSpam(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		newMaxTries := maxTries - 1
+		if newMaxTries > 0 {
+			return SafeSpam(api, data, maxTries)
+		}
 		var errInt map[string]interface{}
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return message_model.Response{}, err
@@ -55,11 +59,6 @@ func SafeSpam(
 	var body message_model.Response
 
 	json.NewDecoder(resp.Body).Decode(&body)
-
-	newMaxTries := maxTries - 1
-	if body.MessagingProduct.MessagingProduct == "" && newMaxTries > 0 {
-		return SafeSpam(api, data, newMaxTries)
-	}
 
 	return body, nil
 }
@@ -98,6 +97,10 @@ func SafeSpamWithCacheControll(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		newMaxTries := maxTries - 1
+		if newMaxTries > 0 {
+			return SafeSpamWithCacheControll(api, data, cacheControl, newMaxTries)
+		}
 		var errInt map[string]interface{}
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return message_model.Response{}, err
@@ -112,11 +115,6 @@ func SafeSpamWithCacheControll(
 	var body message_model.Response
 
 	json.NewDecoder(resp.Body).Decode(&body)
-
-	newMaxTries := maxTries - 1
-	if body.MessagingProduct.MessagingProduct == "" && newMaxTries > 0 {
-		return SafeSpamWithCacheControll(api, data, cacheControl, newMaxTries)
-	}
 
 	return body, nil
 }
