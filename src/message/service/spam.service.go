@@ -3,7 +3,6 @@ package message_service
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"sync"
@@ -40,24 +39,12 @@ func Spam(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return message_model.Response{}, err
-		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
-		if err != nil {
-			return message_model.Response{}, err
-		}
-		return message_model.Response{}, errors.New(string(errMsgBytes))
+		return Spam(api, data)
 	}
 
 	var body message_model.Response
 
 	json.NewDecoder(resp.Body).Decode(&body)
-
-	if body.MessagingProduct.MessagingProduct == "" {
-		return Spam(api, data)
-	}
 
 	return body, nil
 }
@@ -96,24 +83,12 @@ func SpamWithCacheControll(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return message_model.Response{}, err
-		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
-		if err != nil {
-			return message_model.Response{}, err
-		}
-		return message_model.Response{}, errors.New(string(errMsgBytes))
+		return SpamWithCacheControll(api, data, cacheControl)
 	}
 
 	var body message_model.Response
 
 	json.NewDecoder(resp.Body).Decode(&body)
-
-	if body.MessagingProduct.MessagingProduct == "" {
-		return SpamWithCacheControll(api, data, cacheControl)
-	}
 
 	return body, nil
 }
