@@ -43,7 +43,7 @@ func SafeSpam(
 	if resp.StatusCode != http.StatusOK {
 		newMaxTries := maxTries - 1
 		if newMaxTries > 0 {
-			return SafeSpam(api, data, maxTries)
+			return SafeSpam(api, data, newMaxTries)
 		}
 		var errInt map[string]interface{}
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
