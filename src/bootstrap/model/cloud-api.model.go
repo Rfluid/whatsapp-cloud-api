@@ -2,6 +2,7 @@
 package bootstrap_model
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 )
