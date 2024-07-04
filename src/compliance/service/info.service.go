@@ -36,7 +36,7 @@ func Get(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return compliance_model.Info{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return compliance_model.Info{}, err
 		}
@@ -82,7 +82,7 @@ func Post(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return common_model.SuccessResponse{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return common_model.SuccessResponse{}, err
 		}
