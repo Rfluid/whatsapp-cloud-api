@@ -1,3 +1,3 @@
 module github.com/Rfluid/whatsapp-cloud-api
 
-go 1.21.0
+go 1.22.3
