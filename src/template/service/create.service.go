@@ -47,7 +47,7 @@ func Create(
 			return template_model.CreateTemplateResponse{}, err
 		}
 
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return template_model.CreateTemplateResponse{}, err
 		}

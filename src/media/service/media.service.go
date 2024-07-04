@@ -60,7 +60,7 @@ func Upload(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return common_model.Id{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return common_model.Id{}, err
 		}
@@ -108,7 +108,7 @@ func RetrieveURL(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return media_model.MediaInfo{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return media_model.MediaInfo{}, err
 		}
@@ -148,7 +148,7 @@ func Delete(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return common_model.SuccessResponse{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return common_model.SuccessResponse{}, err
 		}
@@ -189,7 +189,7 @@ func Download(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return []byte{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return []byte{}, err
 		}

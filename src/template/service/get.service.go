@@ -41,7 +41,7 @@ func Get(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return template_model.GetTemplateResponse{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return template_model.GetTemplateResponse{}, err
 		}

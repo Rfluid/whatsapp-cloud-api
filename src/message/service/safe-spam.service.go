@@ -49,7 +49,7 @@ func SafeSpam(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return message_model.Response{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return message_model.Response{}, err
 		}
@@ -105,7 +105,7 @@ func SafeSpamWithCacheControll(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return message_model.Response{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return message_model.Response{}, err
 		}

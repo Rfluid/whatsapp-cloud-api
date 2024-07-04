@@ -41,7 +41,7 @@ func RequestCode(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return common_model.SuccessResponse{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return common_model.SuccessResponse{}, err
 		}
@@ -82,7 +82,7 @@ func VerifyCode(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return common_model.SuccessResponse{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return common_model.SuccessResponse{}, err
 		}

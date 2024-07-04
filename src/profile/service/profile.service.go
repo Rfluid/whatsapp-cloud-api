@@ -53,7 +53,7 @@ func GetProfile(
 		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
 			return profile_model.BusinessProfile{}, err
 		}
-		errMsgBytes, err := json.MarshalIndent(errInt, "", "    ")
+		errMsgBytes, err := json.Marshal(errInt)
 		if err != nil {
 			return profile_model.BusinessProfile{}, err
 		}
