@@ -12,7 +12,7 @@ func GenerateWhatsAppAPI(
 	version *string,
 	customMainURL *string,
 	customWABAIdURL *string,
-) bootstrap_model.WhatsAppAPI {
+) (bootstrap_model.WhatsAppAPI, error) {
 	btp := bootstrap_model.WhatsAppAPI{
 		Client: &http.Client{},
 	}
@@ -25,7 +25,11 @@ func GenerateWhatsAppAPI(
 	mainUrl := "https://graph.facebook.com"
 	mUrlP := &mainUrl
 
-	btp.SetVersion(version).SetAccessToken(accessToken).SetMainURL(mUrlP, customMainURL)
+	_, err := btp.SetVersion(version).SetAccessToken(accessToken)
+	if err != nil {
+		return btp, err
+	}
+	btp.SetMainURL(mUrlP, customMainURL)
 
-	return btp
+	return btp, nil
 }

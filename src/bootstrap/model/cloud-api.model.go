@@ -2,11 +2,9 @@
 package bootstrap_model
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
-	"os"
-
-	"github.com/pterm/pterm"
 )
 
 type WhatsAppAPI struct {
@@ -30,25 +28,23 @@ func (btp *WhatsAppAPI) SetWABAIdURL(customUrl *string) {
 
 func (btp *WhatsAppAPI) SetAccessToken(
 	accessToken string,
-) *WhatsAppAPI {
+) (*WhatsAppAPI, error) {
 	if accessToken == "" {
-		pterm.DefaultLogger.Error("Access token was not provided.")
-		os.Exit(1)
+		return btp, errors.New("access token not provided")
 	}
 	btp.AccessToken = accessToken
-	return btp
+	return btp, nil
 }
 
 func (btp *WhatsAppAPI) SetWABAId(
 	waba string,
-) *WhatsAppAPI {
+) (*WhatsAppAPI, error) {
 	if waba != "" {
 		btp.WABAId = waba
 	} else {
-		pterm.DefaultLogger.Error("WABA id was not provided.")
-		os.Exit(1)
+		return btp, errors.New("WABA id not provided")
 	}
-	return btp
+	return btp, nil
 }
 
 func (btp *WhatsAppAPI) SetVersion(
