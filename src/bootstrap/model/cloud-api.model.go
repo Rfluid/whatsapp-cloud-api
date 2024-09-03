@@ -30,7 +30,7 @@ func (btp *WhatsAppAPI) SetAccessToken(
 	accessToken string,
 ) (*WhatsAppAPI, error) {
 	if accessToken == "" {
-		return btp, errors.New("access token not provided")
+		return nil, fmt.Errorf("access token was not provided")
 	}
 	btp.AccessToken = accessToken
 	return btp, nil
@@ -39,11 +39,11 @@ func (btp *WhatsAppAPI) SetAccessToken(
 func (btp *WhatsAppAPI) SetWABAId(
 	waba string,
 ) (*WhatsAppAPI, error) {
-	if waba != "" {
-		btp.WABAId = waba
-	} else {
-		return btp, errors.New("WABA id not provided")
+	if waba == "" {
+		return nil, fmt.Errorf("WABA ID was not provided")
 	}
+	btp.WABAId = waba
+
 	return btp, nil
 }
 
