@@ -2,6 +2,7 @@
 package bootstrap_model
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 )
@@ -42,6 +43,7 @@ func (btp *WhatsAppAPI) SetWABAId(
 		return nil, fmt.Errorf("WABA ID was not provided")
 	}
 	btp.WABAId = waba
+
 	return btp, nil
 }
 
