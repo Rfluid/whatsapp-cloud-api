@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
@@ -34,15 +35,10 @@ func Upload(
 	api bootstrap_model.WhatsAppAPI,
 	data media_model.Upload,
 ) (common_model.Id, error) {
-	file, err := data.ToFormValues()
-	if err != nil {
-		return common_model.Id{}, err
-	}
-
 	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Media),
-		bytes.NewReader(file.Bytes()),
+		strings.NewReader(data.ToURLValues().Encode()),
 	)
 	if err != nil {
 		return common_model.Id{}, err
