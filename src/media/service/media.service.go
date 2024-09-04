@@ -29,11 +29,11 @@ import (
 
 // Uploads media files. All media files sent through this endpoint are
 // encrypted and persist for 30 days, unless they are deleted earlier.
+// See https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media/#upload-media
 func Upload(
 	api bootstrap_model.WhatsAppAPI,
 	data media_model.Upload,
 ) (common_model.Id, error) {
-	data.SetDefault()
 	file, err := data.ToFormValues()
 	if err != nil {
 		return common_model.Id{}, err
@@ -42,7 +42,7 @@ func Upload(
 	req, err := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Media),
-		file,
+		bytes.NewReader(file.Bytes()),
 	)
 	if err != nil {
 		return common_model.Id{}, err
@@ -197,7 +197,6 @@ func Download(
 	}
 
 	mediaBytes, err := io.ReadAll(resp.Body)
-
 	if err != nil {
 		return []byte{}, err
 	}

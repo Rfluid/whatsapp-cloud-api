@@ -77,7 +77,7 @@ func (btp *WhatsAppAPI) SetJSONHeaders() *WhatsAppAPI {
 }
 
 func (btp *WhatsAppAPI) SetFormHeaders() *WhatsAppAPI {
-	btp.JSONHeaders = http.Header{
+	btp.FormHeaders = http.Header{
 		"Authorization": {fmt.Sprintf("Bearer %s", btp.AccessToken)},
 	}
 	return btp
