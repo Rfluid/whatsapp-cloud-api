@@ -2,52 +2,52 @@ package media_model
 
 import (
 	"bytes"
+	"io"
 	"mime/multipart"
-	"net/url"
 
 	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 )
 
 type Upload struct {
-	File                          string                          `json:"file"` // Path to file.
+	FileData                      io.Reader                       // This will handle the media data
+	FileName                      string                          // File name for the media being uploaded	Type                          common_model.SupportedMimeTypes `json:"type"`
 	Type                          common_model.SupportedMimeTypes `json:"type"`
-	BufferBytes                   []byte                          `json:"buffer_bytes"`
 	common_model.MessagingProduct                                 // Use SetDefault() method to set this property.
 }
 
-func (u *Upload) ToURLValues() url.Values {
-	formData := url.Values{}
+// Creates the request body for the file upload
+func (u *Upload) CreateFormFile() (*bytes.Buffer, string, error) {
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
 
-	formData.Set("file", string(u.File))
-	formData.Set("type", string(u.Type))
-	formData.Set("messaging_product", u.MessagingProduct.MessagingProduct)
-
-	return formData
-}
-
-func (u *Upload) ToFormValues() (*bytes.Buffer, error) {
-	buf := new(bytes.Buffer)
-	w := multipart.NewWriter(buf)
-
-	part, err := w.CreateFormFile("file", u.File)
+	// Add file part
+	part, err := writer.CreateFormFile("file", u.FileName)
 	if err != nil {
-		return &bytes.Buffer{}, err
-	}
-	part.Write(u.BufferBytes)
-
-	err = w.WriteField("type", string(u.Type))
-	if err != nil {
-		return &bytes.Buffer{}, err
-	}
-	err = w.WriteField("messaging_product", u.MessagingProduct.MessagingProduct)
-	if err != nil {
-		return &bytes.Buffer{}, err
+		return nil, "", err
 	}
 
-	err = w.Close()
+	// Write file data to the multipart
+	_, err = io.Copy(part, u.FileData)
 	if err != nil {
-		return &bytes.Buffer{}, err
+		return nil, "", err
 	}
 
-	return buf, nil
+	// Add other fields
+	err = writer.WriteField("type", string(u.Type))
+	if err != nil {
+		return nil, "", err
+	}
+
+	err = writer.WriteField("messaging_product", u.MessagingProduct.MessagingProduct)
+	if err != nil {
+		return nil, "", err
+	}
+
+	// Close the writer to finalize the request body
+	err = writer.Close()
+	if err != nil {
+		return nil, "", err
+	}
+
+	return body, writer.FormDataContentType(), nil
 }
