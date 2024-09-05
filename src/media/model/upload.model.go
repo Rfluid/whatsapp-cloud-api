@@ -2,8 +2,10 @@ package media_model
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"mime/multipart"
+	"net/textproto"
 
 	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 )
@@ -16,12 +18,16 @@ type Upload struct {
 }
 
 // Creates the request body for the file upload
-func (u *Upload) CreateFormFile() (*bytes.Buffer, string, error) {
+func (u *Upload) CreateForm() (*bytes.Buffer, string, error) {
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
 
-	// Add file part
-	part, err := writer.CreateFormFile("file", u.FileName)
+	// Create a MIMEHeader to set Content-Disposition and Content-Type
+	headers := textproto.MIMEHeader{}
+	headers.Set("Content-Type", "image/png")
+	headers.Set("Content-Disposition", fmt.Sprintf(`form-data; name="file"; filename="%s"`, u.FileName))
+
+	part, err := writer.CreatePart(headers)
 	if err != nil {
 		return nil, "", err
 	}
