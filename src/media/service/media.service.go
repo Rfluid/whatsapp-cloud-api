@@ -35,7 +35,7 @@ func Upload(
 	data media_model.Upload,
 ) (common_model.Id, error) {
 	// Generate the body and content type for the request
-	body, contentType, err := data.CreateFormFile()
+	body, contentType, err := data.CreateForm()
 	if err != nil {
 		return common_model.Id{}, err
 	}
