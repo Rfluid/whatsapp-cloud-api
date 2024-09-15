@@ -13,6 +13,14 @@ type ErrorData struct {
 	MessagingProduct
 }
 
+type ErrorResponse struct {
+	ErrorField Error `json:"error"`
+}
+
 func (e *Error) Error() string {
 	return e.Message
+}
+
+func (e *ErrorResponse) Error() string {
+	return e.ErrorField.Message
 }
