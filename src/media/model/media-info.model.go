@@ -8,6 +8,6 @@ type MediaInfo struct {
 	URL              string `json:"url,omitempty"`
 	MimeType         string `json:"mime_type,omitempty"`
 	Sha256           string `json:"sha256,omitempty"`
-	FileSize         string `json:"file_size,omitempty"`
+	FileSize         int64  `json:"file_size,omitempty"`
 	common_model.Id
 }
