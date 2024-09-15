@@ -16,7 +16,6 @@ package media_service
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -58,15 +57,11 @@ func Upload(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return common_model.Id{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return common_model.Id{}, err
-		}
-		return common_model.Id{}, errors.New(string(errMsgBytes))
+		return common_model.Id{}, err
 	}
 
 	var bodyResponse common_model.Id
@@ -74,7 +69,7 @@ func Upload(
 		return common_model.Id{}, err
 	}
 
-	return bodyResponse, nil
+	return bodyResponse, err
 }
 
 // Retrievers media URL and info by media id.
@@ -107,22 +102,18 @@ func RetrieveURL(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return media_model.MediaInfo{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return media_model.MediaInfo{}, err
-		}
-		return media_model.MediaInfo{}, errors.New(string(errMsgBytes))
+		return media_model.MediaInfo{}, err
 	}
 
 	var body media_model.MediaInfo
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // Deletes media by media id.
@@ -147,22 +138,18 @@ func Delete(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return common_model.SuccessResponse{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return common_model.SuccessResponse{}, err
-		}
-		return common_model.SuccessResponse{}, errors.New(string(errMsgBytes))
+		return common_model.SuccessResponse{}, err
 	}
 
 	var body common_model.SuccessResponse
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // Downloads media from URL.
@@ -188,15 +175,11 @@ func Download(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return []byte{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return []byte{}, err
-		}
-		return []byte{}, errors.New(string(errMsgBytes))
+		return []byte{}, err
 	}
 
 	mediaBytes, err := io.ReadAll(resp.Body)

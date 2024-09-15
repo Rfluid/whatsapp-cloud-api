@@ -3,12 +3,12 @@ package template_service
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 	template_model "github.com/Rfluid/whatsapp-cloud-api/src/template/model"
 )
 
@@ -41,23 +41,18 @@ func Create(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return template_model.CreateTemplateResponse{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return template_model.CreateTemplateResponse{}, err
-		}
-
-		return template_model.CreateTemplateResponse{}, errors.New(string(errMsgBytes))
+		return template_model.CreateTemplateResponse{}, err
 	}
 
 	var body template_model.CreateTemplateResponse
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }

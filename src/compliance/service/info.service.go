@@ -7,7 +7,6 @@ package compliance_service
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,22 +34,20 @@ func Get(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return compliance_model.Info{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return compliance_model.Info{}, err
-		}
-		return compliance_model.Info{}, errors.New(string(errMsgBytes))
+		return compliance_model.Info{}, err
 	}
 
 	var body compliance_model.Info
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // Creates a BusinessComplianceInfoSanitized (https://developers.facebook.com/docs/graph-api/reference/business-compliance-info-sanitized/).
@@ -81,20 +78,18 @@ func Post(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return common_model.SuccessResponse{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return common_model.SuccessResponse{}, err
-		}
-		return common_model.SuccessResponse{}, errors.New(string(errMsgBytes))
+		return common_model.SuccessResponse{}, err
 	}
 
 	var body common_model.SuccessResponse
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }

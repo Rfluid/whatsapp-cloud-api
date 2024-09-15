@@ -4,7 +4,6 @@ package phone_verification_service
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 
@@ -37,22 +36,20 @@ func RequestCode(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return common_model.SuccessResponse{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return common_model.SuccessResponse{}, err
-		}
-		return common_model.SuccessResponse{}, errors.New(string(errMsgBytes))
+		return common_model.SuccessResponse{}, err
 	}
 
 	var body common_model.SuccessResponse
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // Verifies phone verification code.
@@ -78,20 +75,18 @@ func VerifyCode(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return common_model.SuccessResponse{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return common_model.SuccessResponse{}, err
-		}
-		return common_model.SuccessResponse{}, errors.New(string(errMsgBytes))
+		return common_model.SuccessResponse{}, err
 	}
 
 	var body common_model.SuccessResponse
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
