@@ -1,4 +1,7 @@
 // Manipulates complicance info.
+// Business compliance data is only exposed in the WhatsApp app and the WhatsApp Business app, and only if the app user's phone number is India-based (it begins with +91). So it's probably deprecated.
+//
+// https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account-to-number-current-status/business_compliance_info/
 package compliance_service
 
 import (
