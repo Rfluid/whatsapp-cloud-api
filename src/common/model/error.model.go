@@ -1,13 +1,26 @@
 package common_model
 
 type Error struct {
-	Code      int       `json:"code"`
-	Title     string    `json:"title"`
-	Message   string    `json:"message"` // This value is the same as the title value. For example: Rate limit hit. Note that the message property in API error response payloads pre-pends this value with the a # symbol and the error code in parenthesis. For example: (#130429) Rate limit hit.
+	Message   string    `json:"message"` // A combination of the error code and title.
+	Type      string    `json:"type"`    // Type of error. Example: OAuthException
+	Code      int       `json:"code"`    // Error codes (not HTPP codes) described at https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes/
 	ErrorData ErrorData `json:"error_data"`
+	FBTraceID string    `json:"fbtrace_id"` // Unique identifier for the error. Use this ID when contacting support.
 }
 
 type ErrorData struct {
-	Details string `json:"details"` // Describes the error. Example: Message failed to send because there were too many messages sent from this phone number in a short period of time.
-	any
+	Details string `json:"details"` // Describes the error and provides most probable reason. Might contain information about how to solve the error. Example: Message failed to send because there were too many messages sent from this phone number in a short period of time.
+	MessagingProduct
+}
+
+type ErrorResponse struct {
+	ErrorField Error `json:"error"`
+}
+
+func (e *Error) Error() string {
+	return e.Message
+}
+
+func (e *ErrorResponse) Error() string {
+	return e.ErrorField.Message
 }

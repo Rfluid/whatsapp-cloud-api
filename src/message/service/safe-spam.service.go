@@ -3,13 +3,13 @@ package message_service
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"sync"
 
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
 )
 
@@ -35,32 +35,25 @@ func SafeSpam(
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
-		fmt.Println(err)
 		return message_model.Response{}, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		newMaxTries := maxTries - 1
-		if newMaxTries > 0 {
-			return SafeSpam(api, data, newMaxTries)
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return message_model.Response{}, err
-		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return message_model.Response{}, err
-		}
-		return message_model.Response{}, errors.New(string(errMsgBytes))
+		return message_model.Response{}, err
 	}
 
 	var body message_model.Response
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // SafeSpams message with media cache control.
@@ -97,26 +90,20 @@ func SafeSpamWithCacheControll(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		newMaxTries := maxTries - 1
-		if newMaxTries > 0 {
-			return SafeSpamWithCacheControll(api, data, cacheControl, newMaxTries)
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return message_model.Response{}, err
-		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return message_model.Response{}, err
-		}
-		return message_model.Response{}, errors.New(string(errMsgBytes))
+		return message_model.Response{}, err
 	}
 
 	var body message_model.Response
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // SafeSpams many messages.

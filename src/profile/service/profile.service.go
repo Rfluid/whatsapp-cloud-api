@@ -3,12 +3,12 @@ package profile_service
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 	profile_model "github.com/Rfluid/whatsapp-cloud-api/src/profile/model"
 )
 
@@ -49,20 +49,18 @@ func GetProfile(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return profile_model.BusinessProfile{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return profile_model.BusinessProfile{}, err
-		}
-		return profile_model.BusinessProfile{}, errors.New(string(errMsgBytes))
+		return profile_model.BusinessProfile{}, err
 	}
 
 	var body profile_model.BusinessProfile
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }

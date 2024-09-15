@@ -44,9 +44,9 @@ func Spam(
 
 	var body message_model.Response
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // Spams message with media cache control.
@@ -88,9 +88,9 @@ func SpamWithCacheControll(
 
 	var body message_model.Response
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
 
 // Spams many messages.

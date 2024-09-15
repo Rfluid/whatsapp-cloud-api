@@ -3,12 +3,12 @@ package message_service
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_enum "github.com/Rfluid/whatsapp-cloud-api/src/common/enum"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
 )
 
@@ -33,20 +33,18 @@ func SetStatus(
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		var errInt map[string]interface{}
-		if err := json.NewDecoder(resp.Body).Decode(&errInt); err != nil {
-			return message_model.Response{}, err
+		var respErr common_model.ErrorResponse
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
+			err = decodeErr
+		} else {
+			err = &respErr
 		}
-		errMsgBytes, err := json.Marshal(errInt)
-		if err != nil {
-			return message_model.Response{}, err
-		}
-		return message_model.Response{}, errors.New(string(errMsgBytes))
+		return message_model.Response{}, err
 	}
 
 	var body message_model.Response
 
-	json.NewDecoder(resp.Body).Decode(&body)
+	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return body, nil
+	return body, err
 }
