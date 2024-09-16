@@ -16,5 +16,5 @@ type Parameter struct {
 	Sticker  *media_model.UseMedia               `json:"sticker,omitempty"`
 	DateTime *message_type_common_model.DateTime `json:"date_time,omitempty"`
 	Currency *message_type_common_model.Currency `json:"currency,omitempty"`
-	message_type_common_model.Button
+	message_type_common_model.ButtonData
 }

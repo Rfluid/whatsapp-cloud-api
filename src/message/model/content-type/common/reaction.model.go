@@ -7,13 +7,13 @@ import (
 )
 
 // Reaction messages.
-type Reaction struct {
+type ReactionData struct {
 	MessageId string `json:"message_id"` // Id of the message to react to. Something like "wamid.HBgLM..."
 	Emoji     string `json:"emoji"`      // The emoji encoding. Something like "\uD83D\uDE00"
 }
 
 // Validate wamid format.
-func (r *Reaction) Validate() error {
+func (r *ReactionData) Validate() error {
 	messageSplitted := strings.Split(r.MessageId, ".")
 
 	ch := make(chan error, 2)

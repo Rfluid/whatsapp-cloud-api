@@ -1,6 +1,9 @@
 package message_model
 
-import common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
+import (
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
+	message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/common"
+)
 
 // Entire message that can be sent.
 //
@@ -18,12 +21,12 @@ type Message struct {
 //
 // https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/components#messages-object
 type MessageReceived struct {
-	Context   *ReceivedContext      `json:"context,omitempty"`
-	Errors    *[]common_model.Error `json:"errors,omitempty"`
-	Referral  *Referral             `json:"referral,omitempty"`
-	System    *System               `json:"system,omitempty"`
-	Timestamp string                `json:"timestamp"` // Unix timestamp indicating when the WhatsApp server received the message from the customer.
-	Type      ReceiveType           `json:"type"`
+	Context   *ReceivedContext                      `json:"context,omitempty"`
+	Errors    *[]common_model.Error                 `json:"errors,omitempty"`
+	Referral  *Referral                             `json:"referral,omitempty"`
+	System    *System                               `json:"system,omitempty"`
+	Timestamp string                                `json:"timestamp"` // Unix timestamp indicating when the WhatsApp server received the message from the customer.
+	Type      message_type_common_model.ReceiveType `json:"type"`
 	Content
 	ReceivedDirection
 }

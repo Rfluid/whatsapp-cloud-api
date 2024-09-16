@@ -1,4 +1,4 @@
-package message_model
+package message_type_common_model
 
 type (
 	ReceiveType string

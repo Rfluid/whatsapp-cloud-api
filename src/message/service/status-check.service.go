@@ -4,6 +4,7 @@ import (
 	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
+	message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/common"
 	template_model "github.com/Rfluid/whatsapp-cloud-api/src/template/model"
 )
 
@@ -15,7 +16,7 @@ func SendMessageStatusCheck(
 	msg := message_model.Message{
 		Direction: message_model.Direction{
 			To:   receiverNumber,
-			Type: message_model.Template,
+			Type: message_type_common_model.Template,
 		},
 		Content: message_model.Content{
 			Template: &template_model.UseTemplate{
