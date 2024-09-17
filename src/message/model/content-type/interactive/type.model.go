@@ -13,3 +13,11 @@ var (
 	CatalogMessage InteractiveType = "catalog_message"
 	Flow           InteractiveType = "flow"
 )
+
+type ReceivedInteractive string
+
+var (
+	ButtonReply = "button_reply"
+	ListReply   = "list_reply"
+	Order       = "order"
+)

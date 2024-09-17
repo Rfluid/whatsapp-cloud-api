@@ -13,3 +13,12 @@ type Interactive struct {
 	Footer *message_type_interactive_model.Footer `json:"footer,omitempty"` // An object with the footer of the message.
 	Action *message_type_interactive_model.Action `json:"action,omitempty"` // An action object with what you want the user to perform after reading the message. See action object for full information.
 }
+
+// Described at
+//
+// https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples
+type ReceivedInteractive struct {
+	Type        message_type_interactive_model.InteractiveType  `json:"type"` // The type of interactive message you want to send.
+	ListReply   *message_type_interactive_model.ListReplyData   `json:"list_reply,omitempty"`
+	ButtonReply *message_type_interactive_model.ButtonReplyData `json:"button_reply,omitempty"`
+}

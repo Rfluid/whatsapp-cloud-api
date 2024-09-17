@@ -27,6 +27,6 @@ type MessageReceived struct {
 	System    *System                               `json:"system,omitempty"`
 	Timestamp string                                `json:"timestamp"` // Unix timestamp indicating when the WhatsApp server received the message from the customer.
 	Type      message_type_common_model.ReceiveType `json:"type"`
-	Content
+	ReceivedContent
 	ReceivedDirection
 }
