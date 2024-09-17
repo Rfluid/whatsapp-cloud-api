@@ -18,7 +18,7 @@ type Interactive struct {
 //
 // https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples
 type ReceivedInteractive struct {
-	Type        message_type_interactive_model.InteractiveType  `json:"type"` // The type of interactive message you want to send.
-	ListReply   *message_type_interactive_model.ListReplyData   `json:"list_reply,omitempty"`
-	ButtonReply *message_type_interactive_model.ButtonReplyData `json:"button_reply,omitempty"`
+	Type        message_type_interactive_model.ReceivedInteractive `json:"type"` // The type of interactive message received.
+	ListReply   *message_type_interactive_model.ListReplyData      `json:"list_reply,omitempty"`
+	ButtonReply *message_type_interactive_model.ButtonReplyData    `json:"button_reply,omitempty"`
 }
