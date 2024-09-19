@@ -11,7 +11,6 @@ func GenerateWhatsAppAPI(
 	accessToken string,
 	version *string,
 	customMainURL *string,
-	customWABAIdURL *string,
 ) (*bootstrap_model.WhatsAppAPI, error) {
 	btp := &bootstrap_model.WhatsAppAPI{
 		Client: &http.Client{},
