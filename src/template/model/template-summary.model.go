@@ -2,7 +2,7 @@ package template_model
 
 type TemplateSummaryResponse struct {
 	TotalCount              *uint32 `json:"total_count,omitempty"`
-	MessageTemplateCount    *uint32 `json:"message_template_count,ommitempty"`
+	MessageTemplateCount    *uint32 `json:"message_template_count,omitempty"`
 	MessageTemplateLimit    *uint32 `json:"message_template_limit,omitempty"`
 	AreTranslationsComplete *bool   `json:"are_translations_complete,omitempty"`
 }
