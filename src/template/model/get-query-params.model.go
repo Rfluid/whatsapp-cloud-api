@@ -16,8 +16,8 @@ type TemplateQueryParams struct {
 	Id            string `json:"id,omitempty"`
 	NameOrContent string `json:"name_or_content,omitempty" query:"name_or_content"`
 
-	Fields  *[]TemplateFields  // Fields to be returned.
-	Summary *[]TemplateSummary // Summary to be returned.
+	Fields  *[]TemplateFields  `json:"fields" query:"fields"`   // Fields to be returned.
+	Summary *[]TemplateSummary `json:"summary" query:"summary"` // Summary to be returned.
 
 	common_model.GraphCursors
 }
