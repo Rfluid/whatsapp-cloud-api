@@ -9,14 +9,14 @@ import (
 )
 
 type TemplateQueryParams struct {
-	Name          string  `json:"name,omitempty"`
-	Content       string  `json:"content,omitempty"`
-	Language      string  `json:"language,omitempty"`
-	Status        string  `json:"status,omitempty"`
-	Category      string  `json:"category,omitempty"`
-	Id            string  `json:"id,omitempty"`
-	NameOrContent string  `json:"name_or_content,omitempty" query:"name_or_content"`
-	Limit         *uint64 `json:"limit,omitempty" query:"limit"`
+	Name          string `json:"name,omitempty"`
+	Content       string `json:"content,omitempty"`
+	Language      string `json:"language,omitempty"`
+	Status        string `json:"status,omitempty"`
+	Category      string `json:"category,omitempty"`
+	NameOrContent string `json:"name_or_content,omitempty" query:"name_or_content"`
+
+	Limit *uint64 `json:"limit,omitempty" query:"limit"`
 
 	Fields  *[]TemplateFields  `json:"fields" query:"fields"`   // Fields to be returned.
 	Summary *[]TemplateSummary `json:"summary" query:"summary"` // Summary to be returned.
@@ -58,10 +58,6 @@ func (qp *TemplateQueryParams) BuildQuery() string {
 
 	if qp.Category != "" {
 		v.Set("category", qp.Category)
-	}
-
-	if qp.Id != "" {
-		v.Set("id", qp.Id)
 	}
 
 	// Handle the Fields slice if it's provided
