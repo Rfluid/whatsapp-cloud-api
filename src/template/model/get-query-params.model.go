@@ -1,172 +1,84 @@
 package template_model
 
 import (
-	"fmt"
-	"net/http"
 	"net/url"
-	"sync"
+	"strings"
 
-	common_service "github.com/Rfluid/whatsapp-cloud-api/src/common/service"
+	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 )
 
-type GetQueryParams struct {
-	Fields *[]TemplateFields // Fields to be returned.
-	After  *string           // Used to paginate.
-	Before *string           // Used to paginate.
+type TemplateQueryParams struct {
+	Name          string `json:"name,omitempty"`
+	Content       string `json:"content,omitempty"`
+	Language      string `json:"language,omitempty"`
+	Status        string `json:"status,omitempty"`
+	Category      string `json:"category,omitempty"`
+	Id            string `json:"id,omitempty"`
+	NameOrContent string `json:"name_or_content,omitempty" query:"name_or_content"`
+
+	Fields  *[]TemplateFields  // Fields to be returned.
+	Summary *[]TemplateSummary // Summary to be returned.
+
+	common_model.GraphCursors
 }
 
-func (qp *GetQueryParams) BuildQuery(
-	req *http.Request,
-) {
-	var queryStringWg sync.WaitGroup
-	queryThreadsCh := make(chan int)
-	fieldsCh := make(chan bool)
-	beforeCh := make(chan bool)
-	afterCh := make(chan bool)
+// BuildQuery constructs the query string from TemplateQueryParams.
+// It returns an encoded query string that can be appended to a URL.
+func (qp *TemplateQueryParams) BuildQuery() string {
+	// Initialize a URL values object
+	v := url.Values{}
 
-	queryCh := make(chan url.Values)
+	// Conditionally set each query parameter if it's provided
 
-	fieldsStr := ""
+	if qp.Name != "" {
+		v.Set("name", qp.Name)
+	}
 
-	go func() {
-		queryThreadsCh <- qp.calculateQueryThreads(fieldsCh, afterCh, beforeCh)
-	}()
+	if qp.NameOrContent != "" {
+		v.Set("name_or_content", qp.Name)
+	}
 
-	go func() {
-		common_service.PropagateQueryParamsMultithread(
-			queryCh,
-			<-queryThreadsCh+1,
-			req,
-		)
-	}()
+	if qp.Content != "" {
+		v.Set("components", qp.Content)
+	}
 
-	queryStringWg.Add(1)
-	go func() {
-		defer queryStringWg.Done()
+	if qp.Language != "" {
+		v.Set("language", qp.Language)
+	}
 
-		if <-fieldsCh {
-			fieldsStr += string((*qp.Fields)[0])
-			for _, field := range (*qp.Fields)[1:] {
-				fieldsStr += fmt.Sprintf(",%s", field)
-				(<-queryCh).Add("fields", fieldsStr)
-			}
+	if qp.Status != "" {
+		v.Set("status", qp.Status)
+	}
+
+	if qp.Category != "" {
+		v.Set("category", qp.Category)
+	}
+
+	if qp.Id != "" {
+		v.Set("id", qp.Id)
+	}
+
+	// Handle the Fields slice if it's provided
+	if qp.Fields != nil && len(*qp.Fields) > 0 {
+		// Convert each TemplateFields to its string representation
+		fields := make([]string, len(*qp.Fields))
+		for i, field := range *qp.Fields {
+			fields[i] = string(field)
 		}
-	}()
+		// Join the fields with commas
+		v.Set("fields", strings.Join(fields, ","))
+	}
 
-	queryStringWg.Add(1)
-	go func() {
-		defer queryStringWg.Done()
-		if <-afterCh {
-			(<-queryCh).Add("after", *qp.After)
+	if qp.Summary != nil && len(*qp.Summary) > 0 {
+		summary := make([]string, len(*qp.Summary))
+		for i, s := range *qp.Summary {
+			summary[i] = string(s)
 		}
-	}()
+		v.Set("summary", strings.Join(summary, ","))
+	}
 
-	queryStringWg.Add(1)
-	go func() {
-		defer queryStringWg.Done()
-		if <-beforeCh {
-			(<-queryCh).Add("before", *qp.Before)
-		}
-	}()
+	qp.GraphCursors.BuildQuery(&v)
 
-	queryStringWg.Wait()
-
-	req.URL.RawQuery = (<-queryCh).Encode()
-}
-
-// Calculates the quantity of threads that changes query params.
-func (qp *GetQueryParams) calculateQueryThreads(
-	fieldsCh chan<- bool,
-	afterCh chan<- bool,
-	beforeCh chan<- bool,
-) int {
-	var wg sync.WaitGroup
-	var mu sync.Mutex
-
-	quantity := 0
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		var verifyWg sync.WaitGroup
-
-		value := qp.Fields != nil
-
-		verifyWg.Add(1)
-		go func() {
-			defer verifyWg.Done()
-
-			if value {
-				mu.Lock()
-				quantity++
-				mu.Unlock()
-			}
-		}()
-
-		verifyWg.Add(1)
-		go func() {
-			defer verifyWg.Done()
-			fieldsCh <- value
-		}()
-
-		verifyWg.Wait()
-	}()
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		var verifyWg sync.WaitGroup
-
-		value := qp.Before != nil
-
-		verifyWg.Add(1)
-		go func() {
-			defer verifyWg.Done()
-
-			if value {
-				mu.Lock()
-				quantity++
-				mu.Unlock()
-			}
-		}()
-
-		verifyWg.Add(1)
-		go func() {
-			defer verifyWg.Done()
-			beforeCh <- value
-		}()
-
-		verifyWg.Wait()
-	}()
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		var verifyWg sync.WaitGroup
-
-		value := qp.After != nil
-
-		verifyWg.Add(1)
-		go func() {
-			defer verifyWg.Done()
-
-			if value {
-				mu.Lock()
-				quantity++
-				mu.Unlock()
-			}
-		}()
-
-		verifyWg.Add(1)
-		go func() {
-			defer verifyWg.Done()
-			afterCh <- value
-		}()
-
-		verifyWg.Wait()
-	}()
-
-	wg.Wait()
-
-	return quantity
+	// Encode the query parameters and return the query string
+	return v.Encode()
 }

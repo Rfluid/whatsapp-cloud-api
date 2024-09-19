@@ -5,6 +5,8 @@ import (
 	message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/common"
 )
 
+type TemplateComponent = CreateTemplateComponent
+
 type CreateTemplateComponent struct {
 	Type     ComponentType                           `json:"type"`
 	Text     string                                  `json:"text,omitempty"`

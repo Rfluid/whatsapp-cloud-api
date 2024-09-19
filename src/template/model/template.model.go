@@ -1,12 +1,12 @@
 package template_model
 
 type Template struct {
-	Name       string                     `json:"name,omitempty"`
-	Components *[]CreateTemplateComponent `json:"components,omitempty"`
-	Language   string                     `json:"language,omitempty"`
-	Status     string                     `json:"status,omitempty"`
-	Category   string                     `json:"category,omitempty"`
-	Id         string                     `json:"id,omitempty"`
+	Name       string      `json:"name,omitempty"`
+	Components *[]Template `json:"components,omitempty"`
+	Language   string      `json:"language,omitempty"`
+	Status     string      `json:"status,omitempty"`
+	Category   string      `json:"category,omitempty"`
+	Id         string      `json:"id,omitempty"`
 }
 
 type TemplateFields string

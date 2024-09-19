@@ -7,7 +7,7 @@ import (
 
 // BusinessQueryParams holds the query parameters for a business request.
 type BusinessQueryParams struct {
-	Fields []string `json:"fields,omitempty"`
+	Fields *[]string `json:"fields,omitempty"`
 }
 
 // BuildQuery constructs the query string from BusinessQueryParams.
@@ -17,8 +17,8 @@ func (q BusinessQueryParams) BuildQuery() string {
 	v := url.Values{}
 
 	// If Fields are provided, join them with commas and add to the query
-	if len(q.Fields) > 0 {
-		v.Set("fields", strings.Join(q.Fields, ","))
+	if q.Fields != nil && len(*q.Fields) > 0 {
+		v.Set("fields", strings.Join(*q.Fields, ","))
 	}
 
 	// Encode the query parameters
