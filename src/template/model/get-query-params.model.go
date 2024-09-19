@@ -2,19 +2,21 @@ package template_model
 
 import (
 	"net/url"
+	"strconv"
 	"strings"
 
 	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 )
 
 type TemplateQueryParams struct {
-	Name          string `json:"name,omitempty"`
-	Content       string `json:"content,omitempty"`
-	Language      string `json:"language,omitempty"`
-	Status        string `json:"status,omitempty"`
-	Category      string `json:"category,omitempty"`
-	Id            string `json:"id,omitempty"`
-	NameOrContent string `json:"name_or_content,omitempty" query:"name_or_content"`
+	Name          string  `json:"name,omitempty"`
+	Content       string  `json:"content,omitempty"`
+	Language      string  `json:"language,omitempty"`
+	Status        string  `json:"status,omitempty"`
+	Category      string  `json:"category,omitempty"`
+	Id            string  `json:"id,omitempty"`
+	NameOrContent string  `json:"name_or_content,omitempty" query:"name_or_content"`
+	Limit         *uint64 `json:"limit,omitempty" query:"limit"`
 
 	Fields  *[]TemplateFields  `json:"fields" query:"fields"`   // Fields to be returned.
 	Summary *[]TemplateSummary `json:"summary" query:"summary"` // Summary to be returned.
@@ -32,6 +34,10 @@ func (qp *TemplateQueryParams) BuildQuery() string {
 
 	if qp.Name != "" {
 		v.Set("name", qp.Name)
+	}
+
+	if qp.Limit != nil {
+		v.Set("limit", strconv.FormatUint(*qp.Limit, 10))
 	}
 
 	if qp.NameOrContent != "" {
