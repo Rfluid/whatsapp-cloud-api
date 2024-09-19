@@ -9,6 +9,7 @@ type TemplateComponent = CreateTemplateComponent
 
 type CreateTemplateComponent struct {
 	Type     ComponentType                           `json:"type"`
+	Format   ComponentFormat                         `json:"format,omitempty"`
 	Text     string                                  `json:"text,omitempty"`
 	Image    *media_model.UseMedia                   `json:"image,omitempty"`
 	Video    *media_model.UseMedia                   `json:"video,omitempty"`
