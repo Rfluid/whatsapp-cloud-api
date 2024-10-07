@@ -33,7 +33,7 @@ type Value struct {
 	Contacts *[]Contact                       `json:"contacts,omitempty"`
 	Errors   *[]common_model.Error            `json:"errors,omitempty"`
 	Messages *[]message_model.MessageReceived `json:"messages,omitempty"`
-	Status   *[]Status                        `json:"status,omitempty"`
+	Statuses *[]Status                        `json:"statuses,omitempty"`
 }
 
 type Metadata struct {
