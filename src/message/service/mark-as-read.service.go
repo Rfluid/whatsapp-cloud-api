@@ -53,9 +53,9 @@ func MarkAsRead(
 		return common_model.SuccessResponse{}, err
 	}
 
-	var body message_model.Response
+	var body common_model.SuccessResponse
 
 	err = json.NewDecoder(resp.Body).Decode(&body)
 
-	return common_model.SuccessResponse{}, err
+	return body, err
 }
