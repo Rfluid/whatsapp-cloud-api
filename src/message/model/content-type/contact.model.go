@@ -9,7 +9,7 @@ import (
 
 type Contact struct {
 	Addresses []message_type_contact_model.Address `json:"addresses,omitempty"`
-	Birthday  time.Time                            `json:"birthday,omitempty"`
+	Birthday  *time.Time                           `json:"birthday,omitempty"`
 	Emails    []message_type_contact_model.Email   `json:"emails,omitempty"`
 	Name      message_type_contact_model.Name      `json:"name,omitempty"`
 	Org       message_type_contact_model.Org       `json:"org,omitempty"`
