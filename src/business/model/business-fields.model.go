@@ -2,7 +2,7 @@ package business_model
 
 type BusinessFields string
 
-var (
+const (
 	Id                       BusinessFields = "id"
 	Name                     BusinessFields = "name"
 	Currency                 BusinessFields = "currency"

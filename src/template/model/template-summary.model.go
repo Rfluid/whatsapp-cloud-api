@@ -9,7 +9,7 @@ type TemplateSummaryResponse struct {
 
 type TemplateSummary string
 
-var (
+const (
 	TotalCount              TemplateSummary = "total_count"
 	MessageTemplateCount    TemplateSummary = "message_template_count"
 	MessageTemplateLimit    TemplateSummary = "message_template_limit"

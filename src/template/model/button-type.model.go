@@ -2,7 +2,7 @@ package template_model
 
 type ButtonType string
 
-var (
+const (
 	PhoneNumber ButtonType = "PHONE_NUMBER"
 	Url         ButtonType = "URL"
 	QuickReply  ButtonType = "QUICK_REPLY"

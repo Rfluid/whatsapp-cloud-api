@@ -2,7 +2,7 @@ package template_model
 
 type ComponentFormat string
 
-var (
+const (
 	ImageFormat    ComponentFormat = "IMAGE"
 	VideoFormat    ComponentFormat = "VIDEO"
 	StickerFormat  ComponentFormat = "STICKER"

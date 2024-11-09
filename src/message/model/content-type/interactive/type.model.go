@@ -5,7 +5,7 @@ type InteractiveType string
 // Described at
 //
 // https://developers.facebook.com/docs/whatsapp/on-premises/reference/messages#interactive-object
-var (
+const (
 	List           InteractiveType = "list"
 	Button         InteractiveType = "button"
 	Product        InteractiveType = "product"
@@ -16,7 +16,7 @@ var (
 
 type ReceivedInteractive string
 
-var (
+const (
 	ButtonReply = "button_reply"
 	ListReply   = "list_reply"
 	Order       = "order"

@@ -4,7 +4,7 @@ import message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/messa
 
 type HeaderType message_type_common_model.Type
 
-var (
+const (
 	Document HeaderType = HeaderType(message_type_common_model.Document)
 	Image    HeaderType = HeaderType(message_type_common_model.Image)
 	Video    HeaderType = HeaderType(message_type_common_model.Video)
