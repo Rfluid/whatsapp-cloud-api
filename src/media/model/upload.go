@@ -24,7 +24,7 @@ func (u *Upload) CreateForm() (*bytes.Buffer, string, error) {
 
 	// Create a MIMEHeader to set Content-Disposition and Content-Type
 	headers := textproto.MIMEHeader{}
-	headers.Set("Content-Type", "image/png")
+	headers.Set("Content-Type", string(u.Type))
 	headers.Set("Content-Disposition", fmt.Sprintf(`form-data; name="file"; filename="%s"`, u.FileName))
 
 	part, err := writer.CreatePart(headers)
