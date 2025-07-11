@@ -13,3 +13,13 @@ const (
 	Button   ParameterType = "button"
 	Payload  ParameterType = "payload"
 )
+
+// IsValid checks if the ParameterType is one of the allowed types.
+func (pt ParameterType) IsValid() bool {
+	switch pt {
+	case Text, Currency, DateTime, Image, Video, Sticker, Document, Button, Payload:
+		return true
+	default:
+		return false
+	}
+}

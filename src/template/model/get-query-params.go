@@ -12,7 +12,7 @@ type TemplateQueryParams struct {
 	Name          string `json:"name,omitempty"`
 	Content       string `json:"content,omitempty"`
 	Language      string `json:"language,omitempty"`
-	Status        string `json:"status,omitempty"`
+	Status        Status `json:"status,omitempty" validate:"template_status"`
 	Category      string `json:"category,omitempty"`
 	NameOrContent string `json:"name_or_content,omitempty" query:"name_or_content"`
 
@@ -53,7 +53,7 @@ func (qp *TemplateQueryParams) BuildQuery() string {
 	}
 
 	if qp.Status != "" {
-		v.Set("status", qp.Status)
+		v.Set("status", string(qp.Status))
 	}
 
 	if qp.Category != "" {
