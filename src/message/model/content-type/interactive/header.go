@@ -8,7 +8,7 @@ import (
 //
 // https://developers.facebook.com/docs/whatsapp/on-premises/reference/messages#header-object
 type Header struct {
-	Type HeaderType `json:"type"` // Type of message.
+	Type HeaderType `json:"type" validate:"required,interactive_header_type"` // Type of message.
 
 	Text     *string               `json:"text,omitempty"`
 	Image    *media_model.UseMedia `json:"image,omitempty"`

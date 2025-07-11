@@ -8,7 +8,7 @@ import (
 type TemplateComponent = CreateTemplateComponent
 
 type CreateTemplateComponent struct {
-	Type     ComponentType                       `json:"type"`
+	Type     ComponentType                       `json:"type" validate:"required,template_component_type"`
 	Format   ComponentFormat                     `json:"format,omitempty"`
 	Text     string                              `json:"text,omitempty"`
 	Image    *media_model.UseMedia               `json:"image,omitempty"`

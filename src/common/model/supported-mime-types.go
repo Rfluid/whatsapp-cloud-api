@@ -70,3 +70,20 @@ func ParseMimeType(mimeType string) (SupportedMimeTypes, error) {
 		return TextPlain, errors.New("unsupported type")
 	}
 }
+
+// IsValid checks if the mime type is supported.
+func (smt SupportedMimeTypes) IsValid() bool {
+	switch strings.ToLower(string(smt)) {
+	case string(AudioAac), string(AudioMp4), string(AudioMpeg), string(AudioAmr), string(AudioOgg),
+		string(TextPlain),
+		string(ApplicationPdf), string(ApplicationVndMsPowerpoint), string(ApplicationMsword),
+		string(ApplicationVndMsExcel),
+		string(ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlDocument),
+		string(ApplicationVndOpenxmlformatsOfficedocumentPresentationmlPresentation),
+		string(ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet),
+		string(ImageJpeg), string(ImagePng), string(VideoMp4), string(Video3gp), string(ImageWebp):
+		return true
+	default:
+		return false
+	}
+}

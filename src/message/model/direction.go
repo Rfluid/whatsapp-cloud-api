@@ -5,8 +5,8 @@ import message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/messa
 // Not the content per se of message. Just specifications of
 // what and to whom will be sent.
 type Direction struct {
-	To   string                         `json:"to"`   // Whatsapp ID of receiver.
-	Type message_type_common_model.Type `json:"type"` // Type of message.
+	To   string                         `json:"to"`                                    // Whatsapp ID of receiver.
+	Type message_type_common_model.Type `json:"type" validate:"required,message_type"` // Type of message.
 }
 
 type ReceivedDirection struct {

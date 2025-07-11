@@ -27,3 +27,15 @@ const (
 	SystemReceiveType ReceiveType = "system"
 	Unknown           ReceiveType = "unknown"
 )
+
+// IsValid checks if the Type is one of the supported message types.
+func (t Type) IsValid() bool {
+	switch t {
+	case Text, Reaction, Location, Contacts, Interactive, Template,
+		Image, Video, Audio, Sticker, Document,
+		Button, Order:
+		return true
+	default:
+		return false
+	}
+}
