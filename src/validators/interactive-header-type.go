@@ -9,10 +9,7 @@ import (
 
 // interactiveHeaderTypeValidation checks if a string is a valid HeaderType (case-insensitive).
 func interactiveHeaderTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	ht := message_type_interactive_model.HeaderType(strings.ToLower(input))
 	return ht.IsValid()
