@@ -9,10 +9,7 @@ import (
 
 // templateParameterTypeValidation validates if a string is a valid ParameterType (case-insensitive).
 func templateParameterTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	pt := template_model.ParameterType(strings.ToLower(input))
 	return pt.IsValid()

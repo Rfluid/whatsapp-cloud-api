@@ -9,10 +9,7 @@ import (
 
 // templateButtonTypeValidation is the actual validation logic for ButtonType (case-insensitive).
 func templateButtonTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	bt := template_model.ButtonType(strings.ToUpper(input))
 	return bt.IsValid()

@@ -9,10 +9,7 @@ import (
 
 // templateStatusValidation checks if the input string is a valid TemplateStatus value (case-insensitive).
 func templateStatusValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	templateStatus := template_model.Status(strings.ToUpper(input))
 	return templateStatus.IsValid()

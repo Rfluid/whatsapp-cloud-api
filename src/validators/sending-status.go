@@ -9,10 +9,7 @@ import (
 
 // sendingStatusValidation checks if a string is a valid SendingStatus (case-insensitive).
 func sendingStatusValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	status := message_model.SendingStatus(strings.ToLower(input))
 	return status.IsValid()

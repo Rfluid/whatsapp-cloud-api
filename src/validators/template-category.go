@@ -9,10 +9,7 @@ import (
 
 // templateCategoryValidation validates TemplateCategory values case-insensitively.
 func templateCategoryValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	tc := template_model.TemplateCategory(strings.ToUpper(input))
 	return tc.IsValid()

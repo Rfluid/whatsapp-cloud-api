@@ -9,10 +9,7 @@ import (
 
 // messageTypeValidation validates if a string maps to a valid message Type (case-insensitive).
 func messageTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	msgType := message_type_common_model.Type(strings.ToLower(input))
 	return msgType.IsValid()

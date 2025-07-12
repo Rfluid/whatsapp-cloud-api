@@ -9,10 +9,7 @@ import (
 
 // interactiveButtonTypeValidation is the actual validation logic for ButtonType (case-insensitive).
 func interactiveButtonTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	bt := message_type_interactive_model.ButtonType(strings.ToUpper(input))
 	return bt.IsValid()

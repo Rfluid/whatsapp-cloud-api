@@ -9,10 +9,7 @@ import (
 
 // supportedMimeTypeValidation checks if the given string is a supported MIME type.
 func supportedMimeTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	mimeType := common_model.SupportedMimeTypes(strings.ToLower(input))
 	return mimeType.IsValid()

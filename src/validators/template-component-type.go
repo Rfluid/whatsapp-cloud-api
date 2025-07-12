@@ -9,10 +9,7 @@ import (
 
 // templateComponentTypeValidation validates ComponentType values case-insensitively.
 func templateComponentTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	ct := template_model.ComponentType(strings.ToUpper(input))
 	return ct.IsValid()

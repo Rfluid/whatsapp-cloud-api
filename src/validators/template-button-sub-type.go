@@ -9,10 +9,7 @@ import (
 
 // templateButtonSubTypeValidation validates if a string is a valid ButtonSubType (case-insensitive).
 func templateButtonSubTypeValidation(fl validator.FieldLevel) bool {
-	input, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
+	input := fl.Field().String()
 
 	bst := message_type_common_model.ButtonSubType(strings.ToLower(input))
 	return bst.IsValid()
