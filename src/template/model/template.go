@@ -4,7 +4,7 @@ type Template struct {
 	Name       string               `json:"name,omitempty"`
 	Components *[]TemplateComponent `json:"components,omitempty"`
 	Language   string               `json:"language,omitempty"`
-	Status     Status               `json:"status,omitempty" validate:"template_status"`
+	Status     Status               `json:"status,omitempty" validate:"omitempty,template_status"`
 	Category   string               `json:"category,omitempty"`
 	Id         string               `json:"id,omitempty"`
 }
