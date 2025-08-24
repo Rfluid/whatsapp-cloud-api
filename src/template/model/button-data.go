@@ -8,7 +8,7 @@ type ButtonData struct {
 	PhoneNumber string `json:"phone_number,omitempty"`
 	Example     any    `json:"example,omitempty"` // Check valid examples here https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates/#template-components
 
-	FlowId         int    `json:"flow_id,omitempty"`
+	FlowID         int    `json:"flow_id,omitempty"`
 	FlowAction     string `json:"flow_action,omitempty"`
 	NavigateScreen string `json:"navigate_screen,omitempty"`
 }

@@ -22,7 +22,7 @@ func Get(
 ) (compliance_model.Info, error) {
 	req, _ := http.NewRequest(
 		"GET",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.BusinessComplianceInfo),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.BusinessComplianceInfo),
 		nil,
 	)
 	req.Header = api.JSONHeaders
@@ -62,7 +62,7 @@ func Post(
 
 	req, err := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.BusinessComplianceInfo),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.BusinessComplianceInfo),
 		bytes.NewBuffer(jsonData),
 	)
 	if err != nil {

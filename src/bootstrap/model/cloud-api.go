@@ -8,31 +8,31 @@ import (
 
 type WhatsAppAPI struct {
 	AccessToken      string       // Access token that is combined with Bearer to authenticate requests.
-	WABAId           string       // Number of ID.
-	WABAAccountId    string       // WABA Account ID. Available at https://developers.facebook.com/apps/APP_ID/whatsapp-business/wa-dev-console/?business_id=BUSINESS_ID
+	WABAID           string       // Number of ID.
+	WABAAccountID    string       // WABA Account ID. Available at https://developers.facebook.com/apps/APP_ID/whatsapp-business/wa-dev-console/?business_id=BUSINESS_ID
 	Version          string       // Verision of Meta's graph API.
 	MainURL          string       // Meta's graph API URL with version.
-	WABAIdURL        string       // Used to send messages and things related to number.
-	WABAAccountIdURL string       // Used to get account info such as templates, number, etc.
+	WABAIDURL        string       // Used to send messages and things related to number.
+	WABAAccountIDURL string       // Used to get account info such as templates, number, etc.
 	JSONHeaders      http.Header  // Authenticates JSON requests.
 	FormHeaders      http.Header  // Authenticates form requests.
 	Client           *http.Client // Client to make requests.
 }
 
-func (btp *WhatsAppAPI) SetWABAIdURL(customUrl *string) {
+func (btp *WhatsAppAPI) SetWABAIDURL(customUrl *string) {
 	if customUrl != nil {
-		btp.WABAIdURL = *customUrl
+		btp.WABAIDURL = *customUrl
 		return
 	}
-	btp.WABAIdURL = fmt.Sprintf("%s/%s", btp.MainURL, btp.WABAId)
+	btp.WABAIDURL = fmt.Sprintf("%s/%s", btp.MainURL, btp.WABAID)
 }
 
-func (btp *WhatsAppAPI) SetWABAAccountIdURL(customUrl *string) {
+func (btp *WhatsAppAPI) SetWABAAccountIDURL(customUrl *string) {
 	if customUrl != nil {
-		btp.WABAAccountIdURL = *customUrl
+		btp.WABAAccountIDURL = *customUrl
 		return
 	}
-	btp.WABAAccountIdURL = fmt.Sprintf("%s/%s", btp.MainURL, btp.WABAAccountId)
+	btp.WABAAccountIDURL = fmt.Sprintf("%s/%s", btp.MainURL, btp.WABAAccountID)
 }
 
 func (btp *WhatsAppAPI) SetAccessToken(
@@ -45,24 +45,24 @@ func (btp *WhatsAppAPI) SetAccessToken(
 	return btp, nil
 }
 
-func (btp *WhatsAppAPI) SetWABAId(
+func (btp *WhatsAppAPI) SetWABAID(
 	waba string,
 ) (*WhatsAppAPI, error) {
 	if waba == "" {
 		return nil, fmt.Errorf("WABA ID was not provided")
 	}
-	btp.WABAId = waba
+	btp.WABAID = waba
 
 	return btp, nil
 }
 
-func (btp *WhatsAppAPI) SetWABAAccountId(
-	accountId string,
+func (btp *WhatsAppAPI) SetWABAAccountID(
+	accountID string,
 ) (*WhatsAppAPI, error) {
-	if accountId == "" {
+	if accountID == "" {
 		return nil, fmt.Errorf("WABA Account ID was not provided")
 	}
-	btp.WABAAccountId = accountId
+	btp.WABAAccountID = accountID
 
 	return btp, nil
 }

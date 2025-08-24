@@ -24,7 +24,7 @@ func ConfigIdentityCheck(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.IdentitySettings),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.IdentitySettings),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.JSONHeaders

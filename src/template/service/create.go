@@ -26,7 +26,7 @@ func Create(
 
 	req, err := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAAccountId, common_enum.MessageTemplates),
+		fmt.Sprintf("%s/%s", api.WABAAccountID, common_enum.MessageTemplates),
 		bytes.NewBuffer(jsonData),
 	)
 	if err != nil {

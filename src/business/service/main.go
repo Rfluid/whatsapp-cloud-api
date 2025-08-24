@@ -21,9 +21,9 @@ func Get(
 	queryString := query.BuildQuery()
 
 	// Construct the full URL by appending the query string if it's not empty
-	fullURL := api.WABAAccountIdURL
+	fullURL := api.WABAAccountIDURL
 	if queryString != "" {
-		fullURL = fmt.Sprintf("%s?%s", api.WABAAccountIdURL, queryString)
+		fullURL = fmt.Sprintf("%s?%s", api.WABAAccountIDURL, queryString)
 	}
 
 	// Create a new HTTP GET request with the full URL

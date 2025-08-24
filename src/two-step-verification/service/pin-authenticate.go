@@ -20,7 +20,7 @@ func AuthenticateWithPin(
 
 	req, err := http.NewRequest(
 		"POST",
-		api.WABAIdURL,
+		api.WABAIDURL,
 		bytes.NewBuffer(jsonData),
 	)
 	if err != nil {

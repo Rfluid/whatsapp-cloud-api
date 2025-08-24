@@ -21,7 +21,7 @@ func SetStatus(
 
 	req, _ := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Messages),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.Messages),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.JSONHeaders

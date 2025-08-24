@@ -14,7 +14,7 @@ type WebhookBody struct {
 }
 
 type Entry struct {
-	Id      string   `json:"id"`
+	ID      string   `json:"id"`
 	Changes []Change `json:"changes"`
 }
 

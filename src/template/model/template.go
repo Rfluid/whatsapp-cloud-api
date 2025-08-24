@@ -6,7 +6,7 @@ type Template struct {
 	Language   string               `json:"language,omitempty"`
 	Status     Status               `json:"status,omitempty" validate:"omitempty,template_status"`
 	Category   string               `json:"category,omitempty"`
-	Id         string               `json:"id,omitempty"`
+	ID         string               `json:"id,omitempty"`
 }
 
 type TemplateFields string
@@ -17,5 +17,5 @@ const (
 	Language       TemplateFields = "language"
 	TemplateStatus TemplateFields = "status"
 	Category       TemplateFields = "category"
-	Id             TemplateFields = "id"
+	ID             TemplateFields = "id"
 )

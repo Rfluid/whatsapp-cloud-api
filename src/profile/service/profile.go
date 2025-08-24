@@ -30,7 +30,7 @@ func GetProfile(
 
 	req, err := http.NewRequest(
 		"GET",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.BusinessProfile),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.BusinessProfile),
 		nil,
 	)
 	if err != nil {

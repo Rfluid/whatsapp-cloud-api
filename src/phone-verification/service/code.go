@@ -20,7 +20,7 @@ func RequestCode(
 ) (common_model.SuccessResponse, error) {
 	req, err := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.RequestCode),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.RequestCode),
 		bytes.NewBufferString(data.ToURLValues().Encode()),
 	)
 	if err != nil {
@@ -59,7 +59,7 @@ func VerifyCode(
 ) (common_model.SuccessResponse, error) {
 	req, err := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.VerifyCode),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.VerifyCode),
 		bytes.NewBufferString(data.ToURLValues().Encode()),
 	)
 	if err != nil {

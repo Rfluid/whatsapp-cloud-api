@@ -25,7 +25,7 @@ func Get(
 	queryString := query.BuildQuery()
 
 	// Construct the full URL by appending the query string if it's not empty
-	fullURL := fmt.Sprintf("%s/%s", api.WABAAccountIdURL, common_enum.MessageTemplates)
+	fullURL := fmt.Sprintf("%s/%s", api.WABAAccountIDURL, common_enum.MessageTemplates)
 	if queryString != "" {
 		fullURL = fmt.Sprintf("%s?%s", fullURL, queryString)
 	}

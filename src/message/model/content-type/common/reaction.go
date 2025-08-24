@@ -8,13 +8,13 @@ import (
 
 // Reaction messages.
 type ReactionData struct {
-	MessageId string `json:"message_id"` // Id of the message to react to. Something like "wamid.HBgLM..."
+	MessageID string `json:"message_id"` // ID of the message to react to. Something like "wamid.HBgLM..."
 	Emoji     string `json:"emoji"`      // The emoji encoding. Something like "\uD83D\uDE00"
 }
 
 // Validate wamid format.
 func (r *ReactionData) Validate() error {
-	messageSplitted := strings.Split(r.MessageId, ".")
+	messageSplitted := strings.Split(r.MessageID, ".")
 
 	ch := make(chan error, 2)
 	var wg sync.WaitGroup

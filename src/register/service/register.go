@@ -25,7 +25,7 @@ func Register(
 
 	req, err := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Register),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.Register),
 		bytes.NewBuffer(jsonData),
 	)
 	if err != nil {
@@ -62,7 +62,7 @@ func DeRegister(
 ) (common_model.SuccessResponse, error) {
 	req, err := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.DeRegister),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.DeRegister),
 		nil,
 	)
 	if err != nil {

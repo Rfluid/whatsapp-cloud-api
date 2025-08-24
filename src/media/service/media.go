@@ -32,27 +32,27 @@ import (
 func Upload(
 	api bootstrap_model.WhatsAppAPI,
 	data media_model.Upload,
-) (common_model.Id, error) {
+) (common_model.ID, error) {
 	// Generate the body and content type for the request
 	body, contentType, err := data.CreateForm()
 	if err != nil {
-		return common_model.Id{}, err
+		return common_model.ID{}, err
 	}
 
 	req, err := http.NewRequest(
 		"POST",
-		fmt.Sprintf("%s/%s", api.WABAIdURL, common_enum.Media),
+		fmt.Sprintf("%s/%s", api.WABAIDURL, common_enum.Media),
 		body,
 	)
 	if err != nil {
-		return common_model.Id{}, err
+		return common_model.ID{}, err
 	}
 	req.Header = api.FormHeaders
 	req.Header.Set("Content-Type", contentType)
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
-		return common_model.Id{}, err
+		return common_model.ID{}, err
 	}
 	defer resp.Body.Close()
 
@@ -61,12 +61,12 @@ func Upload(
 		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
 			err = decodeErr
 		}
-		return common_model.Id{}, err
+		return common_model.ID{}, err
 	}
 
-	var bodyResponse common_model.Id
+	var bodyResponse common_model.ID
 	if err := json.NewDecoder(resp.Body).Decode(&bodyResponse); err != nil {
-		return common_model.Id{}, err
+		return common_model.ID{}, err
 	}
 
 	return bodyResponse, err
@@ -78,10 +78,10 @@ func Upload(
 // return the media; you must include an access token.
 // See https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media?locale=pt_BR#download-media.
 //
-// @mediaId The id of media you want info about.
+// @mediaID The id of media you want info about.
 func RetrieveURL(
 	api bootstrap_model.WhatsAppAPI,
-	mediaId string,
+	mediaID string,
 	data media_model.RetrieveInfo,
 ) (media_model.MediaInfo, error) {
 	jsonData, err := json.Marshal(data)
@@ -90,7 +90,7 @@ func RetrieveURL(
 	}
 	req, _ := http.NewRequest(
 		"GET",
-		fmt.Sprintf("%s/%s", api.MainURL, mediaId),
+		fmt.Sprintf("%s/%s", api.MainURL, mediaID),
 		bytes.NewBuffer(jsonData),
 	)
 	req.Header = api.JSONHeaders
@@ -119,11 +119,11 @@ func RetrieveURL(
 // Deletes media by media id.
 func Delete(
 	api bootstrap_model.WhatsAppAPI,
-	mediaId string,
+	mediaID string,
 ) (common_model.SuccessResponse, error) {
 	req, err := http.NewRequest(
 		"DELETE",
-		fmt.Sprintf("%s/%s", api.MainURL, mediaId),
+		fmt.Sprintf("%s/%s", api.MainURL, mediaID),
 		nil,
 	)
 	if err != nil {

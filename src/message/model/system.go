@@ -4,8 +4,8 @@ package message_model
 type System struct {
 	Body     string     `json:"body"`      // Describes the change to the customer's identity or phone number.
 	Identity string     `json:"identity"`  // Hash for the identity fetched from server.
-	NewWaId  string     `json:"new_wa_id"` // New WhatsApp ID for the customer when their phone number is updated. Available on webhook versions v11.0 and earlier.
-	WaId     string     `json:"wa_id"`     // New WhatsApp ID for the customer when their phone number is updated. Available on webhook versions v12.0 and later.
+	NewWaID  string     `json:"new_wa_id"` // New WhatsApp ID for the customer when their phone number is updated. Available on webhook versions v11.0 and earlier.
+	WaID     string     `json:"wa_id"`     // New WhatsApp ID for the customer when their phone number is updated. Available on webhook versions v12.0 and later.
 	Type     SystemType `json:"type"`      // Type of system update.
 	Customer string     `json:"customer"`  // The WhatsApp ID for the customer prior to the update.
 }
