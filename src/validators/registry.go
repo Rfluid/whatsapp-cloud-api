@@ -18,6 +18,7 @@ func RegisterAllValidators(v *validator.Validate) error {
 		RegisterTemplateComponentTypeValidator,
 		RegisterTemplateParameterTypeValidator,
 		RegisterTemplateStatusValidator,
+		RegisterTypingIndicatorTypeValidator,
 	}
 
 	for _, register := range registrations {
