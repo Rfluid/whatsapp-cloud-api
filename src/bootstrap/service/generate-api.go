@@ -17,7 +17,7 @@ func GenerateWhatsAppAPI(
 	}
 
 	if version == nil {
-		vrs := "v20.0"
+		vrs := "v24.0"
 		version = &vrs
 	}
 
