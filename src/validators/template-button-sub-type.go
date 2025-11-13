@@ -11,7 +11,7 @@ import (
 func templateButtonSubTypeValidation(fl validator.FieldLevel) bool {
 	input := fl.Field().String()
 
-	bst := message_type_common_model.ButtonSubType(strings.ToLower(input))
+	bst := message_type_common_model.ButtonSubType(strings.ToUpper(input))
 	return bst.IsValid()
 }
 
