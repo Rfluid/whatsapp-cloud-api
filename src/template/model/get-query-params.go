@@ -9,6 +9,7 @@ import (
 )
 
 type TemplateQueryParams struct {
+	ID            string `json:"id,omitempty"`
 	Name          string `json:"name,omitempty"`
 	Content       string `json:"content,omitempty"`
 	Language      string `json:"language,omitempty"`
@@ -31,6 +32,10 @@ func (qp *TemplateQueryParams) BuildQuery() string {
 	v := url.Values{}
 
 	// Conditionally set each query parameter if it's provided
+
+	if qp.ID != "" {
+		v.Set("id", qp.ID)
+	}
 
 	if qp.Name != "" {
 		v.Set("name", qp.Name)
