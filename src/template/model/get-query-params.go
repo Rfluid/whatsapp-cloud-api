@@ -3,6 +3,7 @@ package template_model
 import (
 	"net/url"
 	"strconv"
+	"strings"
 
 	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 )
@@ -17,6 +18,8 @@ type TemplateQueryParams struct {
 	Status        Status               `json:"status,omitempty" validate:"omitempty,template_status"`
 
 	Limit *uint64 `json:"limit,omitempty" query:"limit"`
+
+	Summary *[]TemplateSummary `json:"summary" query:"summary"` // Summary to be returned.
 
 	common_model.GraphCursors
 }
@@ -61,6 +64,15 @@ func (qp *TemplateQueryParams) BuildQuery() string {
 	// Pagination fields
 	if qp.Limit != nil {
 		v.Set("limit", strconv.FormatUint(*qp.Limit, 10))
+	}
+
+	// Summary
+	if qp.Summary != nil && len(*qp.Summary) > 0 {
+		summary := make([]string, len(*qp.Summary))
+		for i, s := range *qp.Summary {
+			summary[i] = string(s)
+		}
+		v.Set("summary", strings.Join(summary, ","))
 	}
 
 	// Graph cursor fields
