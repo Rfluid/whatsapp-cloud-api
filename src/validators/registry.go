@@ -18,6 +18,7 @@ func RegisterAllValidators(v *validator.Validate) error {
 		RegisterTemplateComponentTypeValidator,
 		RegisterTemplateParameterTypeValidator,
 		RegisterTemplateStatusValidator,
+		RegisterTemplateQualityScoreValidator,
 		RegisterTypingIndicatorTypeValidator,
 	}
 

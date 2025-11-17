@@ -3,24 +3,20 @@ package template_model
 import (
 	"net/url"
 	"strconv"
-	"strings"
 
 	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
 )
 
 type TemplateQueryParams struct {
-	ID            string `json:"id,omitempty"`
-	Name          string `json:"name,omitempty"`
-	Content       string `json:"content,omitempty"`
-	Language      string `json:"language,omitempty"`
-	Status        Status `json:"status,omitempty" validate:"omitempty,template_status"`
-	Category      string `json:"category,omitempty"`
-	NameOrContent string `json:"name_or_content,omitempty" query:"name_or_content"`
+	Category      TemplateCategory     `json:"category,omitempty" validate:"omitempty,template_category"`
+	Content       string               `json:"content,omitempty"`
+	Language      string               `json:"language,omitempty"`
+	Name          string               `json:"name,omitempty"`
+	NameOrContent string               `json:"name_or_content,omitempty" query:"name_or_content"`
+	QualityScore  TemplateQualityScore `json:"quality_score,omitempty" query:"quality_score" validate:"omitempty,template_quality_score"`
+	Status        Status               `json:"status,omitempty" validate:"omitempty,template_status"`
 
 	Limit *uint64 `json:"limit,omitempty" query:"limit"`
-
-	Fields  *[]TemplateFields  `json:"fields" query:"fields"`   // Fields to be returned.
-	Summary *[]TemplateSummary `json:"summary" query:"summary"` // Summary to be returned.
 
 	common_model.GraphCursors
 }
@@ -33,20 +29,9 @@ func (qp *TemplateQueryParams) BuildQuery() string {
 
 	// Conditionally set each query parameter if it's provided
 
-	if qp.ID != "" {
-		v.Set("id", qp.ID)
-	}
-
-	if qp.Name != "" {
-		v.Set("name", qp.Name)
-	}
-
-	if qp.Limit != nil {
-		v.Set("limit", strconv.FormatUint(*qp.Limit, 10))
-	}
-
-	if qp.NameOrContent != "" {
-		v.Set("name_or_content", qp.Name)
+	// Template fields
+	if qp.Category != "" {
+		v.Set("category", string(qp.Category))
 	}
 
 	if qp.Content != "" {
@@ -57,33 +42,28 @@ func (qp *TemplateQueryParams) BuildQuery() string {
 		v.Set("language", qp.Language)
 	}
 
+	if qp.Name != "" {
+		v.Set("name", qp.Name)
+	}
+
+	if qp.NameOrContent != "" {
+		v.Set("name_or_content", qp.Name)
+	}
+
+	if qp.QualityScore != "" {
+		v.Set("quality_score", string(qp.QualityScore))
+	}
+
 	if qp.Status != "" {
 		v.Set("status", string(qp.Status))
 	}
 
-	if qp.Category != "" {
-		v.Set("category", qp.Category)
+	// Pagination fields
+	if qp.Limit != nil {
+		v.Set("limit", strconv.FormatUint(*qp.Limit, 10))
 	}
 
-	// Handle the Fields slice if it's provided
-	if qp.Fields != nil && len(*qp.Fields) > 0 {
-		// Convert each TemplateFields to its string representation
-		fields := make([]string, len(*qp.Fields))
-		for i, field := range *qp.Fields {
-			fields[i] = string(field)
-		}
-		// Join the fields with commas
-		v.Set("fields", strings.Join(fields, ","))
-	}
-
-	if qp.Summary != nil && len(*qp.Summary) > 0 {
-		summary := make([]string, len(*qp.Summary))
-		for i, s := range *qp.Summary {
-			summary[i] = string(s)
-		}
-		v.Set("summary", strings.Join(summary, ","))
-	}
-
+	// Graph cursor fields
 	qp.GraphCursors.BuildQuery(&v)
 
 	// Encode the query parameters and return the query string
