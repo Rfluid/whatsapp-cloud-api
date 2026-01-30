@@ -3,7 +3,7 @@ package validators
 import (
 	"strings"
 
-	common_model "github.com/Rfluid/whatsapp-cloud-api/src/common/model"
+	"github.com/Rfluid/whatsapp-cloud-api/src/common"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -11,7 +11,7 @@ import (
 func supportedMimeTypeValidation(fl validator.FieldLevel) bool {
 	input := fl.Field().String()
 
-	mimeType := common_model.SupportedMimeTypes(strings.ToLower(input))
+	mimeType := common.SupportedMimeTypes(strings.ToLower(input))
 	return mimeType.IsValid()
 }
 

@@ -3,7 +3,7 @@ package validators
 import (
 	"strings"
 
-	typing_model "github.com/Rfluid/whatsapp-cloud-api/src/typing/model"
+	"github.com/Rfluid/whatsapp-cloud-api/src/typing"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -11,7 +11,7 @@ import (
 func typingIndicatorTypeValidation(fl validator.FieldLevel) bool {
 	input := fl.Field().String()
 
-	status := typing_model.TypingIndicatorType(strings.ToLower(input))
+	status := typing.TypingIndicatorType(strings.ToLower(input))
 	return status.IsValid()
 }
 

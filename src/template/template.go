@@ -1,0 +1,21 @@
+package template
+
+type Template struct {
+	Name       string               `json:"name,omitempty"`
+	Components *[]TemplateComponent `json:"components,omitempty"`
+	Language   string               `json:"language,omitempty"`
+	Status     Status               `json:"status,omitempty" validate:"omitempty,template_status"`
+	Category   string               `json:"category,omitempty"`
+	ID         string               `json:"id,omitempty"`
+}
+
+type TemplateFields string
+
+const (
+	Name           TemplateFields = "name"
+	Components     TemplateFields = "components"
+	Language       TemplateFields = "language"
+	TemplateStatus TemplateFields = "status"
+	Category       TemplateFields = "category"
+	ID             TemplateFields = "id"
+)

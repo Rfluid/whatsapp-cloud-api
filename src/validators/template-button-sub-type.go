@@ -3,7 +3,7 @@ package validators
 import (
 	"strings"
 
-	message_type_common_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/common"
+	"github.com/Rfluid/whatsapp-cloud-api/src/message/content"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -11,7 +11,7 @@ import (
 func templateButtonSubTypeValidation(fl validator.FieldLevel) bool {
 	input := fl.Field().String()
 
-	bst := message_type_common_model.ButtonSubType(strings.ToUpper(input))
+	bst := content.ButtonSubType(strings.ToUpper(input))
 	return bst.IsValid()
 }
 

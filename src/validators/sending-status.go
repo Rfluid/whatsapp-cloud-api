@@ -3,7 +3,7 @@ package validators
 import (
 	"strings"
 
-	message_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model"
+	"github.com/Rfluid/whatsapp-cloud-api/src/message"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -11,7 +11,7 @@ import (
 func sendingStatusValidation(fl validator.FieldLevel) bool {
 	input := fl.Field().String()
 
-	status := message_model.SendingStatus(strings.ToLower(input))
+	status := message.SendingStatus(strings.ToLower(input))
 	return status.IsValid()
 }
 

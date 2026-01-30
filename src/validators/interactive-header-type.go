@@ -3,7 +3,7 @@ package validators
 import (
 	"strings"
 
-	message_type_interactive_model "github.com/Rfluid/whatsapp-cloud-api/src/message/model/content-type/interactive"
+	"github.com/Rfluid/whatsapp-cloud-api/src/message/interactive"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -11,7 +11,7 @@ import (
 func interactiveHeaderTypeValidation(fl validator.FieldLevel) bool {
 	input := fl.Field().String()
 
-	ht := message_type_interactive_model.HeaderType(strings.ToLower(input))
+	ht := interactive.HeaderType(strings.ToLower(input))
 	return ht.IsValid()
 }
 

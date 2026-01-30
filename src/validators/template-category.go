@@ -3,7 +3,7 @@ package validators
 import (
 	"strings"
 
-	template_model "github.com/Rfluid/whatsapp-cloud-api/src/template/model"
+	"github.com/Rfluid/whatsapp-cloud-api/src/template"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -11,7 +11,7 @@ import (
 func templateCategoryValidation(fl validator.FieldLevel) bool {
 	input := fl.Field().String()
 
-	tc := template_model.TemplateCategory(strings.ToUpper(input))
+	tc := template.TemplateCategory(strings.ToUpper(input))
 	return tc.IsValid()
 }
 
