@@ -1,5 +1,5 @@
 // Provides modules to bootstrap API.
-package bootstrap_model
+package bootstrap
 
 import (
 	"fmt"

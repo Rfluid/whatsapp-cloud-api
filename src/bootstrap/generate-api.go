@@ -1,18 +1,17 @@
 // Useful functions to bootstrap the API.
-package bootstrap_service
+package bootstrap
 
 import (
 	"net/http"
 
-	bootstrap_model "github.com/Rfluid/whatsapp-cloud-api/src/bootstrap/model"
 )
 
 func GenerateWhatsAppAPI(
 	accessToken string,
 	version *string,
 	customMainURL *string,
-) (*bootstrap_model.WhatsAppAPI, error) {
-	btp := &bootstrap_model.WhatsAppAPI{
+) (*WhatsAppAPI, error) {
+	btp := &WhatsAppAPI{
 		Client: &http.Client{},
 	}
 
