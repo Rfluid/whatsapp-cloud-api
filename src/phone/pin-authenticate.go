@@ -15,7 +15,10 @@ func AuthenticateWithPin(
 	api bootstrap.WhatsAppAPI,
 	pin Pin,
 ) (common.SuccessResponse, error) {
-	jsonData, _ := json.Marshal(pin)
+	jsonData, err := json.Marshal(pin)
+	if err != nil {
+		return common.SuccessResponse{}, err
+	}
 
 	req, err := http.NewRequest(
 		"POST",

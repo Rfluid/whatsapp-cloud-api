@@ -25,7 +25,7 @@ func RequestCode(
 		return common.SuccessResponse{}, err
 	}
 
-	req.Header = api.JSONHeaders
+	req.Header = api.FormHeaders
 
 	resp, err := api.Client.Do(req)
 	if err != nil {
