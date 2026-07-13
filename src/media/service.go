@@ -58,6 +58,8 @@ func Upload(
 		var respErr common.ErrorResponse
 		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
 			err = decodeErr
+		} else {
+			err = &respErr
 		}
 		return common.ID{}, err
 	}
@@ -103,6 +105,8 @@ func RetrieveURL(
 		var respErr common.ErrorResponse
 		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
 			err = decodeErr
+		} else {
+			err = &respErr
 		}
 		return MediaInfo{}, err
 	}
@@ -139,6 +143,8 @@ func Delete(
 		var respErr common.ErrorResponse
 		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
 			err = decodeErr
+		} else {
+			err = &respErr
 		}
 		return common.SuccessResponse{}, err
 	}
@@ -176,6 +182,8 @@ func Download(
 		var respErr common.ErrorResponse
 		if decodeErr := json.NewDecoder(resp.Body).Decode(&respErr); decodeErr != nil {
 			err = decodeErr
+		} else {
+			err = &respErr
 		}
 		return []byte{}, err
 	}
